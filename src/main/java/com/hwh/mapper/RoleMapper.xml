@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hwh.mapper.RoleMapper">
+
+    <select id="getRoleByUserCode" resultType="com.hwh.po.Role" parameterType="String">
+       select * from sys_role r
+        where r.id in
+        (
+          select ur.sys_role_id from sys_user_role ur
+          where ur.sys_user_id in
+          (
+             select u.id from sys_user u where u.usercode = #{usercode}
+          )
+        )
+    </select>
+
+    <select id="getAllRole" resultType="com.hwh.po.Role">
+        select * from sys_role where available = '1'
+    </select>
+</mapper>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hwh.mapper.PermissionMapper">
+
+    <select id="getPermissionByUserCode" resultType="com.hwh.po.Permission" parameterType="String">
+         select *
+         from sys_permission
+         where type = 'permission'
+         and id in
+        (
+           select sys_permission_id
+           from sys_role_permission
+           where sys_role_id in
+           (
+               select sys_role_id
+               from sys_user_role
+               where sys_user_id in
+               (
+                  select id from sys_user where usercode = #{usercode}
+                )
+           )
+        )
+    </select>
+</mapper>

@@ -1,0 +1,33 @@
+{
+  "data": [{
+    "id": 1,
+    "text": "用户管理",
+    "icon": "&#xe621;",
+    "href": "/userItem.jsp",
+    "subset": [{
+      "id": 2,
+      "text": "用户增加",
+      "icon": "&#xe621;",
+      "href": "/userAdd.action",
+      "subset": null
+    }, {
+      "id": 3,
+      "text": "用户修改",
+      "icon": "&#xe621;",
+      "href": "/userUpdate.action",
+      "subset": null
+    }]
+  }, {
+    "id": 4,
+    "text": "商品管理",
+    "icon": "&#xe621;",
+    "href": "/commodityItem.jsp",
+    "subset": [{
+      "id": 5,
+      "text": "商品增加",
+      "icon": "&#xe621;",
+      "href": "/commodityAdd.action",
+      "subset": null
+    }]
+  }]
+}

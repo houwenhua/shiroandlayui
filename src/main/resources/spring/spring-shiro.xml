@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd
+    http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop.xsd
+    http://www.springframework.org/schema/tx
+    http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <property name="securityManager" ref="securityManager"/>
+        <property name="loginUrl" value="login.jsp" />
+        <property name="unauthorizedUrl" value="403.jsp" />
+        <property name="filterChainDefinitions">
+            <value>
+                /login.jsp = anon
+                /css/** = anon
+                /frame/** = anon
+                /image/** = anon
+                /js/** = anon
+                /json/** = anon
+                /jsp/login.jsp = anon
+
+                /loginController/subLogin.action = anon
+
+
+                /** = authc
+            </value>
+        </property>
+    </bean>
+
+    <!--第一步：创建securityManager-->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="realm" ref="realm" />
+        <property name="sessionManager" ref="sessionManager"/>
+        <property name="cacheManager" ref="cacheManager" />
+    </bean>
+
+    <!--注册自定义的realm-->
+    <bean id="realm" class="com.hwh.shiro.realm.CustomRealm">
+        <!--<property name="credentialsMatcher" ref="credentialsMatcher"/>-->
+    </bean>
+
+    <!--注册加密-->
+    <bean id="credentialsMatcher" class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+        <property name="hashAlgorithmName" value="md5"/>
+        <property name="hashIterations" value="1"/>
+    </bean>
+
+    <!--注册sessionManager-->
+    <bean id="sessionManager" class="com.hwh.session.CustomSessionManager">
+        <property name="sessionDAO" ref="redisSessionDao" />
+    </bean>
+    <bean id="redisSessionDao" class="com.hwh.session.RedisSessionDao" />
+
+    <!--注册cacheManager-->
+    <bean id="cacheManager" class="com.hwh.cache.RedisCacheManager" />
+</beans>
