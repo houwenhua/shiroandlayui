@@ -7,7 +7,7 @@ package com.hwh.po;
 public class RolePermission {
     private Integer id;
 
-    private Integer roleid;
+    private String roleid;
 
     private Integer permissionid;
 
@@ -19,11 +19,11 @@ public class RolePermission {
         this.id = id;
     }
 
-    public Integer getRoleid() {
+    public String getRoleid() {
         return roleid;
     }
 
-    public void setRoleid(Integer roleid) {
+    public void setRoleid(String roleid) {
         this.roleid = roleid;
     }
 

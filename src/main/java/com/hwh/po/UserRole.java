@@ -7,9 +7,9 @@ package com.hwh.po;
 public class UserRole {
     private Integer id;
 
-    private Integer userid;
+    private String userid;
 
-    private Integer roleid;
+    private String roleid;
 
     public Integer getId() {
         return id;
@@ -19,19 +19,19 @@ public class UserRole {
         this.id = id;
     }
 
-    public Integer getUserid() {
+    public String getUserid() {
         return userid;
     }
 
-    public void setUserid(Integer userid) {
+    public void setUserid(String userid) {
         this.userid = userid;
     }
 
-    public Integer getRoleid() {
+    public String getRoleid() {
         return roleid;
     }
 
-    public void setRoleid(Integer roleid) {
+    public void setRoleid(String roleid) {
         this.roleid = roleid;
     }
 }

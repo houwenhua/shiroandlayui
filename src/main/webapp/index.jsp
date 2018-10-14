@@ -83,14 +83,14 @@
             </ul>
             <div class="layui-tab-content">
                 <div class="layui-tab-item layui-show">
-                    <iframe id="iframe" src="demo/welcome.html" frameborder="0"></iframe>
+                    <iframe width="100%" height="100%" id="iframe" src="welcome.jsp" frameborder="0"></iframe>
                 </div>
             </div>
         </div>
     </div>
     <!-- footer -->
-    <div class="layui-footer my-footer">
-
+    <div class="layui-footer my-footer" style="text-align: center;">
+        Copyright &copy;2018 by HWH
     </div>
 </div>
 

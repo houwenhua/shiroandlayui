@@ -6,7 +6,7 @@ package com.hwh.vo;
  */
 public class UserVo {
 
-    private Integer id;
+    private String id;
 
     private String usercode;
 
@@ -18,11 +18,11 @@ public class UserVo {
 
     private String locked;
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -69,7 +69,7 @@ public class UserVo {
     public UserVo() {
     }
 
-    public UserVo(Integer id, String usercode, String username, String password, String salt, String locked) {
+    public UserVo(String id, String usercode, String username, String password, String salt, String locked) {
         this.id = id;
         this.usercode = usercode;
         this.username = username;

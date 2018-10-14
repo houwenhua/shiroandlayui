@@ -5,17 +5,17 @@ package com.hwh.po;
  * @create 2018/9/25 13:41
  */
 public class Role {
-    private Integer id;
+    private String id;
 
     private String name;
 
     private String available;
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 

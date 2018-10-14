@@ -34,7 +34,8 @@ public class UserController {
 
     @RequestMapping(value = "/findAllUser",method = RequestMethod.POST,produces = "application/json;charset=utf-8")
     @ResponseBody
-    public DataTable findAllUser() {
+    public DataTable findAllUser(String username,int page,int limit) {
+        System.out.println(page+limit);
         DataTable dataTables = us.getAllUsers();
         return  dataTables;
     }

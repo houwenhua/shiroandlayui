@@ -5,7 +5,7 @@ package com.hwh.po;
  * @create 2018/9/25 13:40
  */
 public class User {
-    private Integer id;
+    private String id;
 
     private String usercode;
 
@@ -17,11 +17,11 @@ public class User {
 
     private String locked;
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
