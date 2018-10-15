@@ -8,6 +8,7 @@ import com.hwh.vo.DataTable;
 import com.hwh.vo.RoleVo;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -40,10 +41,11 @@ public class UserController {
         return  dataTables;
     }
 
-    @RequiresPermissions("user:delete")
+
+    @RequiresRoles("用户管理员")
     @RequestMapping(value = "/delete",method = RequestMethod.POST,produces = "application/json;charset=utf-8")
     @ResponseBody
-    public String delete(int id,String usercode) {
+    public String delete(String id,String usercode) {
         return "1";
     }
 

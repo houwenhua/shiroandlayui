@@ -33,7 +33,7 @@
         <div class="layui-input-inline">
             <input name="username" type="text" autocomplete="off" placeholder="请输入用户姓名" class="layui-input">
         </div>
-        <button class="layui-btn mgl-20" onclick="queryUserItem();">查询</button>
+        <button class="layui-btn mgl-20" id="btn-query">查询</button>
     </span>
 </div>
 
@@ -44,11 +44,10 @@
 <script type="text/javascript" src="../js/index.js"></script>
 <script type="text/javascript">
     //查询方法
-    /*function queryUserItem() {
+    function queryUserItem() {
         alert(1);
         // layui方法
         layui.use(['table', 'form', 'layer', 'vip_table'], function () {
-
             // 操作对象
             var form = layui.form
                 , table = layui.table
@@ -74,7 +73,8 @@
                     page: true //开启分页
 
             });
-    }*/
+        });
+    }
 
 
     // layui方法
