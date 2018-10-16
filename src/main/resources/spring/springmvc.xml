@@ -36,16 +36,17 @@
         <property name="securityManager" ref="securityManager" />
     </bean>
 
-    <!--<bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+    <!--解决，注解权限时，没有权限不跳转到异常页面而只抛异常的问题-->
+    <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
         <property name="exceptionMappings">
             <props>
-                <prop key="org.apache.shiro.authz.UnauthorizedException">  &lt;!&ndash;//表示捕获的异常&ndash;&gt;
-                    /unauthorized
+                <prop key="org.apache.shiro.authz.UnauthorizedException">
+                    /loginController/testRole.action
                 </prop>
-                <prop key="org.apache.shiro.authz.UnauthenticatedException">  &lt;!&ndash;//表示捕获的异常&ndash;&gt;
-                    /unauthenticated
+                <prop key="org.apache.shiro.authz.UnauthenticatedException">
+                    /loginController/testRole.action
                 </prop>
             </props>
         </property>
-    </bean>-->
+    </bean>
 </beans>

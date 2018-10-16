@@ -52,6 +52,7 @@ public class LoginController {
     @RequestMapping(value = "/testRole")
     @ResponseBody
     public String testRole() {
+        System.out.println("异常挑瓷砖***********");
         return "testRole success";
     }
 
