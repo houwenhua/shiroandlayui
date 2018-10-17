@@ -133,7 +133,9 @@
                         },
                         dataType: "json",
                         success: function(data){
-                            if(data == '1'){
+                            if(data === "444"){
+                                layer.msg("没有操作权限", {icon: 5});
+                            }else if(data == '1'){
                                 //删除这一行
                                 obj.del();
                                 //关闭弹框

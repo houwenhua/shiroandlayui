@@ -24,7 +24,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">账号</label>
         <div class="layui-input-block">
-            <input type="text" name="usercode" lay-verify="usercode" autocomplete="off" placeholder="请输入账号" class="layui-input">
+            <input type="text" name="usercode" lay-verify="required" autocomplete="off" placeholder="请输入账号" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
@@ -150,7 +150,9 @@
                     userrole:$.trim(data.field.userrole)
                 },
                 success:function (data) {
-                    if(data === "1") {
+                    if(data === "444"){
+                        layer.msg("没有操作权限", {icon: 5});
+                    }else if(data === "1") {
                         //假设这是iframe页
                         var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
                         parent.layer.close(index); //再执行关闭

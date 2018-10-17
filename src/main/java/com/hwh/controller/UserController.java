@@ -42,17 +42,17 @@ public class UserController {
     }
 
 
-    @RequiresRoles("用户管理员1")
+    @RequiresRoles("用户管理员")
     @RequestMapping(value = "/delete",method = RequestMethod.POST,produces = "application/json;charset=utf-8")
     @ResponseBody
     public String delete(String id,String usercode) {
         return "1";
     }
 
-    //@RequiresPermissions("user:add")
+    @RequiresRoles("用户管理员")
     @RequestMapping(value = "/add",method = RequestMethod.POST,produces = "application/json;charset=utf-8")
     @ResponseBody
-    public String add(User user,int userrole) {
+    public String add(User user,String userrole) {
         System.out.println(userrole);
         return "1";
     }
