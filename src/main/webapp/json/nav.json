@@ -1,1 +1,1 @@
-{"data":[{"icon":"&#xe621;","id":1,"text":"权限管理","href":"","subset":[{"icon":"&#xe621;","id":2,"text":"用户管理","href":"/jsp/userItem.jsp"},{"icon":"&#xe621;","id":3,"text":"角色管理","href":"/jsp/roleItem.jsp"},{"icon":"&#xe621;","id":4,"text":"资源管理","href":"/jsp/permissionItem.jsp"}]}]}
+{"data":[{"icon":"&#xe621;","id":1,"text":"权限管理1","href":"","subset":[{"icon":"&#xe621;","id":2,"text":"用户管理","href":"/jsp/userItem.jsp"},{"icon":"&#xe621;","id":3,"text":"角色管理","href":"/jsp/roleItem.jsp"},{"icon":"&#xe621;","id":4,"text":"资源管理","href":"/jsp/permissionItem.jsp"}]}]}

@@ -42,10 +42,11 @@ public class UserController {
     }
 
 
-    @RequiresRoles("用户管理员1")
+    @RequiresRoles("用户管理员")
     @RequestMapping(value = "/delete",method = RequestMethod.POST,produces = "application/json;charset=utf-8")
     @ResponseBody
     public String delete(String id,String usercode) {
+        System.out.println("执行删除方法******");
         return "1";
     }
 

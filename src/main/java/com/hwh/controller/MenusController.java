@@ -28,7 +28,7 @@ public class MenusController {
     private MenusService ms;
 
     @RequestMapping(value = "/findMenus",produces = "application/json;charset=utf-8")
-    public List<MenusVo> findMenus() {
+    public Map findMenus() {
         //获得登录用户的账号
         String usercode = (String) SecurityUtils.getSubject().getPrincipal();
         //根据登录的用户查找用户对应的权限资源
@@ -43,7 +43,7 @@ public class MenusController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return list;
+        return map;
     }
 
     /**

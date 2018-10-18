@@ -122,7 +122,7 @@
         // 顶部左侧菜单生成 [请求地址,过滤ID,是否展开,携带参数]
         //vipNav.top_left('./json/nav_top_left.json','side-top-left',false);
         // 主体菜单生成 [请求地址,过滤ID,是否展开,携带参数]
-        $.ajax({
+       /* $.ajax({
             type:"POST",
             dataType:"json",
             url:"/menusController/findMenus.action",
@@ -132,8 +132,9 @@
                 //console.log(menus);
                 //console.log(menus);
             }
-        });
-        vipNav.main('./json/nav.json','side-main',true);
+        });*/
+        vipNav.main('/menusController/findMenus.action','side-main',true);
+        //vipNav.main('./json/nav.json','side-main',true);
 
 
         // you code ...

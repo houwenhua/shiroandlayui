@@ -33,7 +33,7 @@
         <div class="layui-input-inline">
             <input name="username" type="text" autocomplete="off" placeholder="请输入用户姓名" class="layui-input">
         </div>
-        <button class="layui-btn mgl-20" id="btn-query">查询</button>
+        <button class="layui-btn mgl-20" id="btn-query" onclick="queryUserItem();">查询</button>
     </span>
 </div>
 
@@ -54,9 +54,12 @@
                 , layer = layui.layer
                 , vipTable = layui.vip_table
                 , $ = layui.jquery;
+            $.get("/userController/delete.action",function (data) {
+                alert(data);
+            });
 
             //执行一个 table 实例
-            table.render({
+           /* table.render({
                     elem: '#dateTable',                  //指定原始表格元素选择器（推荐id选择器）
                     height: vipTable.getFullHeight(),    //容器高度
                     url: '/userController/findAllUser.action'
@@ -72,7 +75,7 @@
                     },
                     page: true //开启分页
 
-            });
+            });*/
         });
     }
 
