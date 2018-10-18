@@ -20,13 +20,25 @@ public class AuthUtilController {
     private final String noAuth = "444";
 
     /**
+     * 用于注解权限没有权限时跳转
      * 没有授权跳转到********
      * @return
      */
     @RequestMapping(value = "/noAuthorizedException",method = RequestMethod.POST,produces = "application/json;charset=utf-8")
     @ResponseBody
     public String noAuthorizedException(){
-        System.out.println("没有授权跳转到********");
+        System.out.println("没有授权跳转到，用于注解权限没有权限时跳转********");
+        return noAuth;
+    }
+
+    /**
+     * 用于配置文件没有权限时，跳转
+     * @return
+     */
+    @RequestMapping(value = "/noAuthorizedException1",method = RequestMethod.GET,produces = "application/json;charset=utf-8")
+    @ResponseBody
+    public String noAuthorizedException1(){
+        System.out.println("没有授权跳转到，用于配置文件没有权限时，跳转********");
         return noAuth;
     }
 

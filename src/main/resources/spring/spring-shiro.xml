@@ -16,18 +16,21 @@
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
         <property name="securityManager" ref="securityManager"/>
         <property name="loginUrl" value="login.jsp" />
-        <property name="unauthorizedUrl" value="403.jsp" />
+        <property name="unauthorizedUrl" value="/authUtilController/noAuthorizedException1.action" /><!--方法是get方法-->
         <property name="filterChainDefinitions">
             <value>
-                /login.jsp = anon
+                <!--加载静态文件-->
                 /css/** = anon
                 /frame/** = anon
                 /image/** = anon
                 /js/** = anon
                 /json/** = anon
+                <!--加载静态文件-->
+                /login.jsp = anon
                 /jsp/login.jsp = anon
-
                 /loginController/subLogin.action = anon
+
+                /userController/add.action = roles[用户管理员1]
 
 
                 /** = authc
