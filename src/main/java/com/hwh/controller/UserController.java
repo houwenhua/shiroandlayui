@@ -50,6 +50,14 @@ public class UserController {
         return "1";
     }
 
+    @RequiresRoles("用户管理员")
+    @RequestMapping(value = "/batchDelete",method = RequestMethod.POST,produces = "application/json;charset=utf-8")
+    @ResponseBody
+    public String batchDelete(String ids) {
+        System.out.println("执行删除方法******"+ids);
+        return "1";
+    }
+
     //@RequiresRoles("用户管理员")
     @RequestMapping(value = "/add",method = RequestMethod.POST,produces = "application/json;charset=utf-8")
     @ResponseBody

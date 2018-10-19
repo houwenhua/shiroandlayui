@@ -33,7 +33,7 @@
         <div class="layui-input-inline">
             <input name="username" type="text" autocomplete="off" placeholder="请输入用户姓名" class="layui-input">
         </div>
-        <button class="layui-btn mgl-20" id="btn-query" onclick="queryUserItem();">查询</button>
+        <button class="layui-btn mgl-20" id="btn-query">查询</button>
     </span>
 </div>
 
@@ -43,42 +43,6 @@
 <script type="text/javascript" src="../frame/layui/layui.js"></script>
 <script type="text/javascript" src="../js/index.js"></script>
 <script type="text/javascript">
-    //查询方法
-    function queryUserItem() {
-        alert(1);
-        // layui方法
-        layui.use(['table', 'form', 'layer', 'vip_table'], function () {
-            // 操作对象
-            var form = layui.form
-                , table = layui.table
-                , layer = layui.layer
-                , vipTable = layui.vip_table
-                , $ = layui.jquery;
-            $.get("/userController/delete.action",function (data) {
-                alert(data);
-            });
-
-            //执行一个 table 实例
-           /* table.render({
-                    elem: '#dateTable',                  //指定原始表格元素选择器（推荐id选择器）
-                    height: vipTable.getFullHeight(),    //容器高度
-                    url: '/userController/findAllUser.action'
-                    ,method:'POST'   //laui 修改请求方式
-                    ,request: {
-                        pageName: 'currentPageNo'//页码的参数名称，默认：page
-                        ,limitName: 'pageSize' //每页数据量的参数名，默认：limit
-                    },
-                    response: {
-                        statusName: 'result'//数据状态的字段名称，默认：code
-                        ,countName: 'totalCount' //数据总数的字段名称，默认：count
-                        ,dataName: 'datas' //默数据列表的字段名称，认：data        //我返回的datas集合
-                    },
-                    page: true //开启分页
-
-            });*/
-        });
-    }
-
 
     // layui方法
     layui.use(['table', 'form', 'layer', 'vip_table'], function () {
@@ -117,6 +81,29 @@
         $('#btn-refresh').on('click', function () {
             tableIns.reload();
         });
+
+        //查询方法
+        $("#btn-query").click(function () {
+            alert(111);
+            //执行一个 table 实例
+            /* table.render({
+                     elem: '#dateTable',                  //指定原始表格元素选择器（推荐id选择器）
+                     height: vipTable.getFullHeight(),    //容器高度
+                     url: '/userController/findAllUser.action'
+                     ,method:'POST'   //laui 修改请求方式
+                     ,request: {
+                         pageName: 'currentPageNo'//页码的参数名称，默认：page
+                         ,limitName: 'pageSize' //每页数据量的参数名，默认：limit
+                     },
+                     response: {
+                         statusName: 'result'//数据状态的字段名称，默认：code
+                         ,countName: 'totalCount' //数据总数的字段名称，默认：count
+                         ,dataName: 'datas' //默数据列表的字段名称，认：data        //我返回的datas集合
+                     },
+                     page: true //开启分页
+
+             });*/
+        })
 
 
         // you code ...
@@ -184,6 +171,43 @@
                 }
             });
         });
+
+        $("#btn-delete-all").click(function () {
+            //获得所有的ID值组装成一，为分割的字符串
+            var checkStatus = table.checkStatus('dataCheck');
+            var ids = "";
+            for(var i = 0; i < checkStatus.data.length; i++) {
+                ids = ids + "," + checkStatus.data[i].id;
+            }
+            //去掉最前面的，逗号
+            ids = ids.substr(1);
+            if(ids != "") {
+                layer.confirm('确定删除选中的数据?', {icon: 3, title:'提示'}, function(index){
+                    $.ajax({
+                        url: "/userController/batchDelete.action",
+                        type: "POST",
+                        data:{
+                            "ids":ids
+                        },
+                        dataType: "json",
+                        success: function(data){
+                            if(data === "444"){
+                                layer.msg("没有操作权限", {icon: 5});
+                            }else if(data == '1'){
+                                tableIns.reload();
+                                //关闭弹框
+                                layer.close(index);
+                                layer.msg("删除成功", {icon: 6});
+                            }else{
+                                layer.msg("删除失败", {icon: 5});
+                            }
+                        }
+                    });
+                });
+            } else {
+                layer.msg("没有选中数据!!!",{icon:5});
+            }
+        })
     });
 </script>
 <!-- 表格操作按钮集 -->
