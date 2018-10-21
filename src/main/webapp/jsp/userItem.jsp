@@ -137,8 +137,34 @@
                         }
                     });
                 });
-            } else if(obj.event === 'edit'){
-                layer.alert('编辑行：<br>'+ JSON.stringify(data))
+            } else if(obj.event === 'edit') {
+                layer.open({
+                    type: 2,
+                    title: '用户修改',
+                    shadeClose: false,
+                    anim:0,//动画平滑放大。默认
+                    shade: 0.8,
+                    maxmin:true,
+                    btn:['保存','取消'],
+                    area: ['30%', '90%'],
+                    content: '/userupdate.jsp', //iframe的url
+                    success: function(layero, index){
+                        var iframe = window['layui-layer-iframe' + index];
+                        //传递选中行的id值
+                        iframe.child(data);
+                    },
+                    yes: function(index,layero){
+                        var body = layer.getChildFrame('body', index);
+                        var iframeWin = window[layero.find('iframe')[0]['name']]; //得到iframe页的窗口对象，执行iframe页的方法：iframeWin.method();
+                        iframeWin.addUser();
+                    },
+                    btn2: function(){
+                        //alert("这是点击取消按钮走的回调");
+                    },
+                    end:function () {
+                        tableIns.reload();
+                    }
+                });
             }
         });
 

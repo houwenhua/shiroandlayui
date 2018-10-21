@@ -30,9 +30,6 @@
                 /jsp/login.jsp = anon
                 /loginController/subLogin.action = anon
 
-                /userController/add.action = roles[用户管理员1]
-
-
                 /** = authc
             </value>
         </property>

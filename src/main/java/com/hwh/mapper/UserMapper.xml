@@ -11,4 +11,12 @@
     <select id="getAllUsers" resultType="com.hwh.po.User" >
         select * from sys_user
     </select>
+
+    <insert id="addUser" parameterType="com.hwh.po.User">
+        insert into sys_user values(#{id},#{usercode},#{username},#{password},#{salt},#{locked})
+    </insert>
+
+    <insert id="addUserRole" parameterType="String">
+        insert into sys_user_role(sys_user_id, sys_role_id) values(#{usercode},#{userrole})
+    </insert>
 </mapper>

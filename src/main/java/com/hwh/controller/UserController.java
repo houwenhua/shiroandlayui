@@ -6,6 +6,7 @@ import com.hwh.service.RoleService;
 import com.hwh.service.UserService;
 import com.hwh.vo.DataTable;
 import com.hwh.vo.RoleVo;
+import com.hwh.vo.UserVo;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresRoles;
@@ -58,11 +59,12 @@ public class UserController {
         return "1";
     }
 
-    //@RequiresRoles("用户管理员")
+    @RequiresRoles("用户管理员")
     @RequestMapping(value = "/add",method = RequestMethod.POST,produces = "application/json;charset=utf-8")
     @ResponseBody
-    public String add(User user,String userrole) {
+    public String add(UserVo user, String userrole) {
         System.out.println(userrole);
+        String flag = us.addUser(user,userrole);
         return "1";
     }
 

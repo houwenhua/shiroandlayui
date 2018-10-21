@@ -17,6 +17,18 @@ public class User {
 
     private String locked;
 
+    public User() {
+    }
+
+    public User(String id, String usercode, String username, String password, String salt, String locked) {
+        this.id = id;
+        this.usercode = usercode;
+        this.username = username;
+        this.password = password;
+        this.salt = salt;
+        this.locked = locked;
+    }
+
     public String getId() {
         return id;
     }

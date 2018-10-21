@@ -14,13 +14,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>表单</title>
-    <link rel="stylesheet" href="../frame/layui/css/layui.css">
+    <link rel="stylesheet" href="../frame/layui2/css/layui.css">
     <link rel="stylesheet" href="../frame/static/css/style.css">
     <link rel="icon" href="../frame/static/image/code.png">
 </head>
 <body class="body">
 
-<form class="layui-form" action="" id="userForm" onsubmit="return false">
+<form class="layui-form" lay-filter="example" action="" id="userForm" onsubmit="return false">
+    <div class="layui-form-item" style="display: none;">
+        <label class="layui-form-label">ID</label>
+        <div class="layui-input-block">
+            <input type="text" name="id" lay-verify="required" autocomplete="off" placeholder="请输入账号" class="layui-input">
+        </div>
+    </div>
     <div class="layui-form-item">
         <label class="layui-form-label">账号</label>
         <div class="layui-input-block">
@@ -75,10 +81,23 @@
         </div>
     </div>
 </form>
-<script src="../frame/layui/layui.js" charset="utf-8"></script>
+<script src="../frame/layui2/layui.js" charset="utf-8"></script>
 <script>
-
-
+    function child(obj){
+        layui.use(['form', 'layedit', 'laydate'], function() {
+            var form = layui.form
+            //表单初始赋值
+            form.val('example', {
+                "id":obj.id,
+                "usercode": obj.usercode, // "name": "value"
+                "username": obj.username,
+                "password": obj.password,
+                "salt":obj.salt,//复选框选中状态
+                "locked":obj.locked === "0"?false:true, //开关状态
+            });
+            form.render();
+        });
+    }
     layui.use(['form', 'layedit', 'laydate'], function(){
         var form = layui.form
             ,layer = layui.layer
@@ -98,8 +117,6 @@
                 form.render();
             }
         });
-
-
 
 
         //监听指定开关
@@ -168,12 +185,7 @@
     //父页面调用实现增加
     function addUser() {
         layui.use(['form', 'layedit', 'laydate'], function() {
-            var form = layui.form
-                , layer = layui.layer
-                , layedit = layui.layedit
-                , laydate = layui.laydate,
-                $ = layui.jquery;
-
+            var $ = layui.jquery;
             //点击保存按钮
             $("#btn-addtwo").click();
         });
