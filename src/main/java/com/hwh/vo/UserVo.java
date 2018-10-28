@@ -18,6 +18,9 @@ public class UserVo {
 
     private String locked;
 
+    //用户角色
+    private String userrole;
+
     public String getId() {
         return id;
     }
@@ -66,6 +69,14 @@ public class UserVo {
         this.locked = locked;
     }
 
+    public String getUserrole() {
+        return userrole;
+    }
+
+    public void setUserrole(String userrole) {
+        this.userrole = userrole;
+    }
+
     public UserVo() {
     }
 
@@ -76,5 +87,15 @@ public class UserVo {
         this.password = password;
         this.salt = salt;
         this.locked = locked;
+    }
+
+    public UserVo(String id, String usercode, String username, String password, String salt, String locked, String userrole) {
+        this.id = id;
+        this.usercode = usercode;
+        this.username = username;
+        this.password = password;
+        this.salt = salt;
+        this.locked = locked;
+        this.userrole = userrole;
     }
 }

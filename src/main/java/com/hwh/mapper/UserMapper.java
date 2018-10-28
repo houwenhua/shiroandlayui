@@ -1,6 +1,7 @@
 package com.hwh.mapper;
 
 import com.hwh.po.User;
+import com.hwh.vo.UserVo;
 import org.apache.ibatis.annotations.Param;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.stereotype.Repository;
@@ -18,7 +19,11 @@ public interface UserMapper {
 
     List<User> getAllUsers();
 
+    List<UserVo> getAllUserVos();
+
     Integer addUser(User u);
 
     void addUserRole(@Param("usercode") String usercode, @Param("userrole") String userrole);
+
+    void deleteUserById(String id);
 }

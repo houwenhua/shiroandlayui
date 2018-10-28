@@ -48,6 +48,7 @@ public class UserController {
     @ResponseBody
     public String delete(String id,String usercode) {
         System.out.println("执行删除方法******");
+        us.deleteUser(id);
         return "1";
     }
 

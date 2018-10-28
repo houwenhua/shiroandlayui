@@ -21,15 +21,17 @@ public class UserService {
     private UserMapper um;
 
     public DataTable getAllUsers() {
-        List<User> list = um.getAllUsers();
+        //List<User> list = um.getAllUsers();
+
+        List<UserVo> list1 = um.getAllUserVos();
         //封装数据到DataTable中
         List<UserVo> uvList = new ArrayList<>();
-        for(User u : list) {
-            UserVo uv = new UserVo(u.getId(),u.getUsercode(),u.getUsername(),u.getPassword(),u.getSalt(),u.getLocked());
+        for(UserVo u : list1) {
+            UserVo uv = new UserVo(u.getId(),u.getUsercode(),u.getUsername(),u.getPassword(),u.getSalt(),u.getLocked(),u.getUserrole());
             uvList.add(uv);
         }
         //获得数据记录数
-        Long count = new Long(list.size());
+        Long count = new Long(list1.size());
 
         DataTable dataTable = new DataTable(0,"",count,uvList);
         return dataTable;
@@ -55,5 +57,10 @@ public class UserService {
     //增加用户角色
     private void addUserRole(String usercode, String userrole) {
         um.addUserRole(usercode,userrole);
+    }
+
+    //删除用户
+    public void deleteUser(String id) {
+        um.deleteUserById(id);
     }
 }

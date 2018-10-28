@@ -65,7 +65,8 @@
                 {field: 'username', title: '用户姓名', width: 120},
                 {field: 'password', title: '密码', width: 180},
                 {field: 'salt', title: '盐巴', width: 180},
-                {field: 'locked', title: '是否锁定', width: 180},
+                {field: 'locked', title: '是否锁定', width: 80},
+                {field: 'userrole', title: '角色', width: 120},
                 {fixed: 'right', title: '操作', width: 200, align: 'center', toolbar: '#barOption'} //这里的toolbar值是模板元素的选择器
             ]],
             id: 'dataCheck',
@@ -113,7 +114,10 @@
             if(obj.event === 'detail'){
                 layer.msg('ID：'+ data.id + ' 的查看操作');
             } else if(obj.event === 'del'){
-                layer.confirm('真的删除该行么', function(index){
+                if(data.usercode === "admin" && data.userrole === "用户管理员") {
+                    layer.msg('系统管理员不能删除！！！',{icon: 5});
+                } else {
+                layer.confirm('真的删除该行么',{icon: 5}, function(index){
                     $.ajax({
                         url: "/userController/delete.action",
                         type: "POST",
@@ -137,6 +141,7 @@
                         }
                     });
                 });
+                }
             } else if(obj.event === 'edit') {
                 layer.open({
                     type: 2,
@@ -202,6 +207,12 @@
             //获得所有的ID值组装成一，为分割的字符串
             var checkStatus = table.checkStatus('dataCheck');
             var ids = "";
+            for(var i = 0; i < checkStatus.data.length; i++) {
+                if(checkStatus.data[i].usercode === "admin" && checkStatus.data[i].userrole === "用户管理员") {
+                    layer.msg('系统管理员不能删除！！！',{icon: 5});
+                    return false;
+                }
+            }
             for(var i = 0; i < checkStatus.data.length; i++) {
                 ids = ids + "," + checkStatus.data[i].id;
             }

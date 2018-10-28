@@ -84,6 +84,7 @@
 <script src="../frame/layui2/layui.js" charset="utf-8"></script>
 <script>
     function child(obj){
+        console.log(obj);
         layui.use(['form', 'layedit', 'laydate'], function() {
             var form = layui.form
             //表单初始赋值

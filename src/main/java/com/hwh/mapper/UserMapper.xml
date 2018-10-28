@@ -8,8 +8,15 @@
         select * from sys_user where usercode = #{usercode}
     </select>
 
-    <select id="getAllUsers" resultType="com.hwh.po.User" >
+   <select id="getAllUsers" resultType="com.hwh.po.User" >
         select * from sys_user
+    </select>
+
+    <select id="getAllUserVos" resultType="com.hwh.vo.UserVo" >
+        select u.*,r.name userrole from sys_user u
+        left join sys_user_role ur on u.id = ur.sys_user_id
+        left join sys_role r on ur.sys_role_id = r.id
+        order by u.usercode
     </select>
 
     <insert id="addUser" parameterType="com.hwh.po.User">
@@ -19,4 +26,8 @@
     <insert id="addUserRole" parameterType="String">
         insert into sys_user_role(sys_user_id, sys_role_id) values(#{usercode},#{userrole})
     </insert>
+
+    <delete id="deleteUserById" parameterType="String">
+        delete from sys_user where id = #{id}
+    </delete>
 </mapper>
