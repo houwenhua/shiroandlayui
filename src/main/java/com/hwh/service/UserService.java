@@ -26,10 +26,26 @@ public class UserService {
         List<UserVo> list1 = um.getAllUserVos();
         //封装数据到DataTable中
         List<UserVo> uvList = new ArrayList<>();
+
+
+        UserVo[] arrayuv = new UserVo[20];
+        int i = 0;
         for(UserVo u : list1) {
             UserVo uv = new UserVo(u.getId(),u.getUsercode(),u.getUsername(),u.getPassword(),u.getSalt(),u.getLocked(),u.getUserrole());
             uvList.add(uv);
+            arrayuv[i++] = uv;
         }
+
+        for(int m = 0; m < arrayuv.length; m++) {
+            String userroles = "";
+            for(int n = m + 1; n < arrayuv.length; n++) {
+                if(arrayuv[m].getId().equals(arrayuv[n].getId())) {
+
+                }
+            }
+        }
+
+
         //获得数据记录数
         Long count = new Long(list1.size());
 
@@ -37,7 +53,7 @@ public class UserService {
         return dataTable;
     }
 
-    public String addUser(UserVo user, String userrole) {
+    public String addUser(UserVo user) {
         //用户的id和usercode是相同的，而且usercode是不允许重复的
         List<User> list = um.getAllUsers();
         for(User user1 : list) {
@@ -49,8 +65,6 @@ public class UserService {
         User u = new User(user.getUsercode(),user.getUsercode(),user.getUsername(),user.getPassword(),user.getSalt(),user.getLocked());
         Integer flag = um.addUser(u);
 
-        //增加用户角色
-        addUserRole(user.getUsercode(),userrole);
         return flag.toString();
     }
 

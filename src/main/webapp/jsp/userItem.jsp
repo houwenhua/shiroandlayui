@@ -66,7 +66,7 @@
                 {field: 'password', title: '密码',width:100},
                 {field: 'salt', title: '盐巴',width:100},
                 {field: 'locked', title: '是否锁定',width:100},
-                {field: 'userrole', title: '角色',width:300},
+                {field: 'userrole', title: '角色',width:200},
                 {fixed: 'right', title: '操作',width:200, align: 'center', toolbar: '#barOption'} //这里的toolbar值是模板元素的选择器
             ]],
             id: 'dataCheck',
@@ -141,7 +141,7 @@
                     shade: 0.8,
                     maxmin:true,
                     btn:['保存','取消'],
-                    area: ['40%', '50%'],
+                    area: ['40%', '60%'],
                     content: '/userroleadd.jsp', //iframe的url
                     success: function(layero, index){
                         var iframe = window['layui-layer-iframe' + index];

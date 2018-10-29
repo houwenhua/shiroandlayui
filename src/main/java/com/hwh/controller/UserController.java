@@ -63,9 +63,8 @@ public class UserController {
     @RequiresRoles("用户管理员")
     @RequestMapping(value = "/add",method = RequestMethod.POST,produces = "application/json;charset=utf-8")
     @ResponseBody
-    public String add(UserVo user, String userrole) {
-        System.out.println(userrole);
-        String flag = us.addUser(user,userrole);
+    public String add(UserVo user) {
+        String flag = us.addUser(user);
         return "1";
     }
 

@@ -64,14 +64,14 @@
             <input type="checkbox" name="locked" lay-skin="switch" lay-text="ON|OFF" lay-filter="switchLocked">
         </div>
     </div>
-    <div class="layui-form-item">
+   <%-- <div class="layui-form-item">
         <label class="layui-form-label">角色信息</label>
         <div class="layui-input-block">
             <select name="userrole" lay-filter="aihao" id="zcySelect" lay-verify="required">
                 <option value=""></option>
             </select>
         </div>
-    </div>
+    </div>--%>
 
 
     <div class="layui-form-item" style="display:none;">
@@ -107,7 +107,7 @@
             $ = layui.jquery;
 
         //加载下拉框的角色选择
-        $.ajax({
+        /*$.ajax({
             type:"POST",
             dataType:"json",
             url:"/userController/findAllRole.action",
@@ -117,7 +117,7 @@
                 }
                 form.render();
             }
-        });
+        });*/
 
 
         //监听指定开关
@@ -125,33 +125,9 @@
             layer.msg('开关checked：'+ (this.checked ? 'true' : 'false'), {
                 offset: '6px'
             });
-            layer.tips('温馨提示：为开(true)时代表用户锁定，不可登录使用。', data.othis)
+           // layer.tips('温馨提示：为开(true)时代表用户锁定，不可登录使用。', data.othis)
         });
 
-
-        //创建一个编辑器
-        var editIndex = layedit.build('LAY_demo_editor');
-
-        //自定义验证规则
-        form.verify({
-            usercode: function(value){
-                if(value.length < 5){
-                    return '标题至少得5个字符啊';
-                }
-            },
-            pass: [/(.+){6,12}$/, '密码必须6到12位'],
-            content: function(value){
-                layedit.sync(editIndex);
-            }
-        });
-
-        //监听指定开关
-        form.on('switch(switchTest)', function(data){
-            layer.msg('开关checked：'+ (this.checked ? 'true' : 'false'), {
-                offset: '6px'
-            });
-            layer.tips('温馨提示：请注意开关状态的文字可以随意定义，而不仅仅是ON|OFF', data.othis)
-        });
 
         //监听提交
         form.on('submit(demo1)', function(data){
