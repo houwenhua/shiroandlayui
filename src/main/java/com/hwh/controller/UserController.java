@@ -76,4 +76,16 @@ public class UserController {
         List<RoleVo> list = rs.getAllRole();
         return list;
     }
+
+    /**
+     * 增加用户角色
+     */
+    @RequiresRoles("用户管理员")
+    @RequestMapping(value = "/addUserRoles",method = RequestMethod.POST,produces = "application/json;charset=utf-8")
+    @ResponseBody
+    public String addUserRoles(String id,String userrole) {
+        System.out.println(id + ":" + userrole);
+        us.addUserRoles(id,userrole);
+        return "1";
+    }
 }

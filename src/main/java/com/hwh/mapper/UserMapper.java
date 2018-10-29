@@ -26,4 +26,6 @@ public interface UserMapper {
     void addUserRole(@Param("usercode") String usercode, @Param("userrole") String userrole);
 
     void deleteUserById(String id);
+
+    void addUserRoles(@Param("id") String id,@Param("userrole") String userrole);
 }

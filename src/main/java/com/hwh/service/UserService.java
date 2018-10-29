@@ -63,4 +63,12 @@ public class UserService {
     public void deleteUser(String id) {
         um.deleteUserById(id);
     }
+
+    //增加角色信息
+    public void addUserRoles(String id, String userrole) {
+        String[] roleids = userrole.split(",");
+        for(int i = 0; i < roleids.length; i++) {
+            um.addUserRoles(id,roleids[i]);
+        }
+    }
 }

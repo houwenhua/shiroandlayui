@@ -60,21 +60,42 @@
             height: vipTable.getFullHeight(),    //容器高度
             cols: [[                  //标题栏
                 {checkbox: true, sort: true, fixed: true, space: true},
-                {field: 'id', title: 'ID', width: 80},
-                {field: 'usercode', title: '账号', width: 120},
-                {field: 'username', title: '用户姓名', width: 120},
-                {field: 'password', title: '密码', width: 180},
-                {field: 'salt', title: '盐巴', width: 180},
-                {field: 'locked', title: '是否锁定', width: 80},
-                {field: 'userrole', title: '角色', width: 120},
-                {fixed: 'right', title: '操作', width: 200, align: 'center', toolbar: '#barOption'} //这里的toolbar值是模板元素的选择器
+                {field: 'id', title: 'ID',width:100},
+                {field: 'usercode', title: '账号',width:100},
+                {field: 'username', title: '用户姓名',width:100},
+                {field: 'password', title: '密码',width:100},
+                {field: 'salt', title: '盐巴',width:100},
+                {field: 'locked', title: '是否锁定',width:100},
+                {field: 'userrole', title: '角色',width:300},
+                {fixed: 'right', title: '操作',width:200, align: 'center', toolbar: '#barOption'} //这里的toolbar值是模板元素的选择器
             ]],
             id: 'dataCheck',
             url: '/userController/findAllUser.action',
             method: 'post',
             page: true,
             limits: [10, 20, 30, 40, 50],
-            limit: 10 //默认采用30
+            limit: 10, //默认采用30
+            done: function (res, curr, count) {
+                //如果是异步请求数据方式，res即为你接口返回的信息。
+                //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
+                console.log(res.data);
+                var data = res.data;
+                for(var i = 0; i < data.length; i++) {
+                    if(data[i].usercode === "admin" && data[i].userrole === "用户管理员") {
+                        $("#del").addClass("layui-btn-disabled");
+                        $("#del").click(function () {
+                            return false;
+                        })
+                    }
+                }
+
+
+                //得到当前页码
+                console.log(curr);
+
+                //得到数据总量
+                console.log(count);
+            }
         });
 
 
@@ -112,7 +133,33 @@
         table.on('tool(dateTable)', function(obj){
             var data = obj.data;
             if(obj.event === 'detail'){
-                layer.msg('ID：'+ data.id + ' 的查看操作');
+                layer.open({
+                    type: 2,
+                    title: '添加角色',
+                    shadeClose: false,
+                    anim:0,//动画平滑放大。默认
+                    shade: 0.8,
+                    maxmin:true,
+                    btn:['保存','取消'],
+                    area: ['40%', '50%'],
+                    content: '/userroleadd.jsp', //iframe的url
+                    success: function(layero, index){
+                        var iframe = window['layui-layer-iframe' + index];
+                        //传递选中行的id值
+                        iframe.child(data);
+                    },
+                    yes: function(index,layero){
+                        var body = layer.getChildFrame('body', index);
+                        var iframeWin = window[layero.find('iframe')[0]['name']]; //得到iframe页的窗口对象，执行iframe页的方法：iframeWin.method();
+                        iframeWin.addUser();
+                    },
+                    btn2: function(){
+                        //alert("这是点击取消按钮走的回调");
+                    },
+                    end:function () {
+                        tableIns.reload();
+                    }
+                });
             } else if(obj.event === 'del'){
                 if(data.usercode === "admin" && data.userrole === "用户管理员") {
                     layer.msg('系统管理员不能删除！！！',{icon: 5});
@@ -249,9 +296,9 @@
 </script>
 <!-- 表格操作按钮集 -->
 <script type="text/html" id="barOption">
-    <a class="layui-btn layui-btn-mini" lay-event="detail">查看</a>
+    <a class="layui-btn layui-btn-mini" lay-event="detail">添加角色</a>
     <a class="layui-btn layui-btn-mini layui-btn-normal" lay-event="edit">编辑</a>
-    <a class="layui-btn layui-btn-mini layui-btn-danger" lay-event="del">删除</a>
+    <a class="layui-btn layui-btn-mini layui-btn-danger" lay-event="del" id="del">删除</a>
 </script>
 </body>
 </html>
