@@ -72,6 +72,14 @@ public class UserController {
         return "1";
     }
 
+    @RequiresRoles("用户管理员")
+    @RequestMapping(value = "/update",method = RequestMethod.POST,produces = "application/json;charset=utf-8")
+    @ResponseBody
+    public String update(UserVo user) {
+        String flag = us.updateUser(user);
+        return "1";
+    }
+
 
     @RequestMapping(value = "/findAllRole",method = RequestMethod.POST,produces = "application/json;charset=utf-8")
     @ResponseBody

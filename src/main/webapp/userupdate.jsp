@@ -30,7 +30,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">账号</label>
         <div class="layui-input-block">
-            <input type="text" name="usercode" lay-verify="required" autocomplete="off" placeholder="请输入账号" class="layui-input">
+            <input type="text" name="usercode" lay-verify="required" autocomplete="off" placeholder="请输入账号" class="layui-input layui-disabled">
         </div>
     </div>
     <div class="layui-form-item">
@@ -45,13 +45,6 @@
             <input type="password" name="password" lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
         </div>
     </div>
-    <%--<div class="layui-form-item">
-        <label class="layui-form-label">密码</label>
-        <div class="layui-input-inline">
-            <input type="password" name="pass" placeholder="请输入密码" autocomplete="off" class="layui-input">
-        </div>
-        <div class="layui-form-mid layui-word-aux">请务必填写用户名</div>
-    </div>--%>
     <div class="layui-form-item">
         <label class="layui-form-label">盐巴</label>
         <div class="layui-input-block">
@@ -99,25 +92,13 @@
             form.render();
         });
     }
+
     layui.use(['form', 'layedit', 'laydate'], function(){
         var form = layui.form
             ,layer = layui.layer
             ,layedit = layui.layedit
             ,laydate = layui.laydate,
             $ = layui.jquery;
-
-        //加载下拉框的角色选择
-        /*$.ajax({
-            type:"POST",
-            dataType:"json",
-            url:"/userController/findAllRole.action",
-            success:function(data) {
-                for(var i = 0; i < data.length; i++){
-                    $("#zcySelect").append("<option value=" + data[i].id + ">" + data[i].name + "</option>");
-                }
-                form.render();
-            }
-        });*/
 
 
         //监听指定开关
@@ -134,14 +115,14 @@
             $.ajax({
                 type:"post",
                 dataType:"json",
-                url:"/userController/add.action",
+                url:"/userController/update.action",
                 data:{
-                    usercode:$.trim(data.field.usercode),
+                    id:$.trim(data.field.id),
+                    //usercode:$.trim(data.field.usercode),
                     username:$.trim(data.field.username),
                     password:$.trim(data.field.password),
                     salt:$.trim(data.field.salt),
-                    locked:$.trim((data.field.locked)==="on"?1:0),
-                    userrole:$.trim(data.field.userrole)
+                    locked:$.trim((data.field.locked)==="on"?1:0)
                 },
                 success:function (data) {
                     if(data === "444"){

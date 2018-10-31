@@ -75,6 +75,7 @@ public class UserService {
     //删除用户
     public void deleteUser(String id) {
         um.deleteUserById(id);
+        um.deleteUserRoleByUserId(id);
     }
 
     //增加角色信息
@@ -112,5 +113,17 @@ public class UserService {
             ids = temp;
             um.dedeleteUserRoles(id,ids);
         }
+    }
+
+    /**
+     * 修改方法,登录名禁止修改usercode
+     * @param user
+     * @return
+     */
+    public String updateUser(UserVo user) {
+        User u = new User(user.getUsername(),user.getPassword(),user.getSalt(),user.getLocked());
+        u.setId(user.getId());
+        Integer flag = um.updateUser(u);
+        return flag.toString();
     }
 }

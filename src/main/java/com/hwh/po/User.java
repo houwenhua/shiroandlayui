@@ -20,6 +20,13 @@ public class User {
     public User() {
     }
 
+    public User(String username, String password, String salt, String locked) {
+        this.username = username;
+        this.password = password;
+        this.salt = salt;
+        this.locked = locked;
+    }
+
     public User(String id, String usercode, String username, String password, String salt, String locked) {
         this.id = id;
         this.usercode = usercode;

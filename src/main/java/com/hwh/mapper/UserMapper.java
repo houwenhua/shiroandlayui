@@ -30,4 +30,8 @@ public interface UserMapper {
     void addUserRoles(@Param("id") String id,@Param("userrole") String userrole);
 
     void dedeleteUserRoles(@Param("id")String id, @Param("ids")String ids);
+
+    void deleteUserRoleByUserId(String id);
+
+    Integer updateUser(User u);
 }
