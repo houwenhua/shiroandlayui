@@ -6,6 +6,7 @@ import com.hwh.service.RoleService;
 import com.hwh.service.UserService;
 import com.hwh.vo.DataTable;
 import com.hwh.vo.RoleVo;
+import com.hwh.vo.SelectVo;
 import com.hwh.vo.UserVo;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -17,7 +18,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author hwh
@@ -71,8 +75,28 @@ public class UserController {
 
     @RequestMapping(value = "/findAllRole",method = RequestMethod.POST,produces = "application/json;charset=utf-8")
     @ResponseBody
-    public List<RoleVo> findAllRole() {
+    public DataTable findAllRole(String id) {
         List<RoleVo> list = rs.getAllRole();
+        List<String> listroleids = findUserAllRole(id);
+
+        List<SelectVo> svList = new ArrayList<>();
+        for(RoleVo rv : list) {
+            SelectVo sv = new SelectVo(rv.getName(),rv.getId(),"","");
+            for(String str : listroleids) {
+                if(str.equals(rv.getId())) {
+                    sv.setSelected("selected");
+                }
+            }
+            svList.add(sv);
+        }
+        DataTable dt = new DataTable(0,"",svList);
+        return dt;
+    }
+
+    @RequestMapping(value = "/findUserAllRole",method = RequestMethod.POST,produces = "application/json;charset=utf-8")
+    @ResponseBody
+    public List<String> findUserAllRole(String id) {
+        List<String> list = rs.getUserAllRole(id);
         return list;
     }
 

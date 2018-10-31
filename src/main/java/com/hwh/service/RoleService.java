@@ -28,4 +28,13 @@ public class RoleService {
         }
         return rlList;
     }
+
+    public List<String> getUserAllRole(String id) {
+        List<Role> list = rm.getUserAllRole(id);
+        List<String> strList = new ArrayList<>();
+        for(Role role : list) {
+            strList.add(role.getId());
+        }
+        return  strList;
+    }
 }

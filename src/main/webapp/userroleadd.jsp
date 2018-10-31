@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="../frame/static/css/style.css">
     <link rel="icon" href="../frame/static/image/code.png">
     <link rel="stylesheet" href="css/public.css" media="all" />
+    <link rel="stylesheet" href="css/formSelects-v4.css" />
 </head>
 <body class="body">
 
@@ -44,7 +45,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">角色</label>
         <div class="layui-input-block">
-            <select lay-filter="aaa" multiple name="userrole" id="userrole" lay-verify="required">
+            <select lay-filter="userrole" multiple name="userrole" id="userrole" lay-verify="required" xm-select="userrole" xm-select-search="">
             </select>
         </div>
     </div>
@@ -57,20 +58,14 @@
     </div>
 </form>
 <script type="text/javascript" src="./frame/layui3/layui.js"></script>
-
-<script type="text/javascript" src="js/selectMultiple.js"></script>
 <script>
-    //填充表单
-    function child(obj){
-        layui.use(['form', 'layedit', 'laydate'], function() {
-            var form = layui.form,
-                $ = layui.jquery;
 
-            $("#id").val(obj.id);
-            $("#usercode").val(obj.usercode);
-            $("#username").val(obj.username);
-        });
-    }
+    //全局定义一次, 加载formSelects
+    layui.config({
+        base: 'js/src/' //此处路径请自行处理, 可以使用绝对路径
+    }).extend({
+        formSelects: 'formSelects-v4'
+    });
 
 
     layui.use(['form', 'layedit', 'laydate'], function(){
@@ -82,7 +77,7 @@
 
 
         //加载下拉框的角色选择
-        $.ajax({
+        /*$.ajax({
             type:"POST",
             dataType:"json",
             url:"/userController/findAllRole.action",
@@ -92,7 +87,7 @@
                 }
                 form.render();
             }
-        });
+        });*/
 
 
 
@@ -131,6 +126,96 @@
             $("#btn-addtwo").click();
         });
 
+
+    }
+
+    //填充表单
+    function child(obj){
+        layui.use(['form', 'layedit', 'laydate', 'formSelects'], function() {
+            var form = layui.form,
+                $ = layui.jquery,
+                formSelects = layui.formSelects;
+
+            formSelects.data('userrole', 'server', {
+                url: '/userController/findAllRole.action',
+                type:'post',
+                data:{
+                    id:obj.id
+                },
+                beforeSuccess: function(id, url, searchVal, result){
+                    //我要把数据外层的code, msg, data去掉
+                    result = result.data;
+                    //然后返回数据
+                    return result;
+                },
+                success: function(id, url, searchVal, result){
+                    console.log('id: example6_3, 成功返回数据!!!');
+                }
+            });
+
+           /* formSelects.config('userrole', {
+                searchUrl: '/userController/findAllRole.action',
+                type:'post',
+                success: function(id, url, searchVal, result){
+                    //console.log(result.data);
+                    //formSelects.value('userrole', [result.data[0].value]);
+                    var data = "";
+                    for(var i = 0; i < result.data.length; i++) {
+                        data += result.data[i].value + ",";
+                    }
+                    data = data.substr(0,data.length-1);
+                    data = result.data[0].value;
+                    formSelects.value('userrole', [data]);
+                }
+            });
+
+            formSelects.config('example5_5', {
+                searchUrl: 'http://yapi.demo.qunar.com/mock/9813/layui/search',
+                success: function(id, url, searchVal, result){
+                    formSelects.value('example5_5', [result.data[0].value, result.data[4].value]);
+                }
+            });
+*/
+            /*formSelects.config('userrole', {
+                searchUrl: '/userController/findUserAllRole.action',
+                type:'post',
+                data:{
+                    id:obj.id
+                },
+                success: function(id, url, searchVal, result){
+                    console.log(result);
+                    var data = result.data;
+                    //var json =
+                    for(var i = 0; i < data.length; i++) {
+                        formSelects.value('userrole', data[i].value);
+                    }
+                    //formSelects.value('example5_5', [result.data[0].value, result.data[4].value]);
+                }
+            });*/
+
+            $("#id").val(obj.id);
+            $("#usercode").val(obj.usercode);
+            $("#username").val(obj.username);
+            //$("#abc").val(["2","3"]);
+            //$("#userrole").val(["2","3"]);
+            //$("#userrole").val("spgly");
+            //form.render();
+            //$("select[name=userrole]").val("3");
+            /*$.ajax({
+                type:"POST",
+                dataType:"json",
+                url:"/userController/findUserAllRole.action",
+                data:{
+                    id:obj.id
+                },
+                success:function(data) {
+                    for(var i = 0; i < data.length; i++){
+                        //$("#userrole").val(data[i]);
+                    }
+                    form.render();
+                }
+            });*/
+        });
 
     }
 </script>

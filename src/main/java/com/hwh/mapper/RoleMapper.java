@@ -16,4 +16,6 @@ public interface RoleMapper {
     Set<Role> getRoleByUserCode(String usercode);
 
     List<Role> getAllRole();
+
+    List<Role> getUserAllRole(String id);
 }

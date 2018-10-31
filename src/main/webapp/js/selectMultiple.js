@@ -13,6 +13,6 @@ layui.use(['form','layer'],function(){
         return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
     })
 
-    $("select[name=aaa]").val(["4","5"]);
-    form.render();
+    $("#abc").val(["2","3"]);
+    //form.render();
 })

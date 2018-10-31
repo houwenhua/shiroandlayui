@@ -20,6 +20,12 @@ public class DataTable {
     public DataTable() {
     }
 
+    public DataTable(Integer code, String msg, Object data) {
+        this.code = code;
+        this.msg = msg;
+        this.data = data;
+    }
+
     public DataTable(Integer code, String msg, Long count, Object data) {
         this.code = code;
         this.msg = msg;

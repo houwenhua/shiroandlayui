@@ -27,24 +27,23 @@ public class UserService {
         //封装数据到DataTable中
         List<UserVo> uvList = new ArrayList<>();
 
-
-        UserVo[] arrayuv = new UserVo[20];
-        int i = 0;
-        for(UserVo u : list1) {
-            UserVo uv = new UserVo(u.getId(),u.getUsercode(),u.getUsername(),u.getPassword(),u.getSalt(),u.getLocked(),u.getUserrole());
-            uvList.add(uv);
-            arrayuv[i++] = uv;
-        }
-
-        for(int m = 0; m < arrayuv.length; m++) {
-            String userroles = "";
-            for(int n = m + 1; n < arrayuv.length; n++) {
-                if(arrayuv[m].getId().equals(arrayuv[n].getId())) {
-
+        for  ( int  i  =   0 ; i  <=  list1.size()  -   1 ; i ++ )  {
+            String userroles = list1.get(i).getUserrole();
+            UserVo uv = new UserVo(list1.get(i).getId(),list1.get(i).getUsercode(),list1.get(i).getUsername(),list1.get(i).getPassword(),list1.get(i).getSalt(),list1.get(i).getLocked(),list1.get(i).getUserrole());
+            for  ( int  j  =  list1.size()  -   1 ; j  >  i; j -- )  {
+                if  (list1.get(j).getId().equals(list1.get(i).getId()))  {
+                    userroles = userroles + "," +list1.get(j).getUserrole();
+                    list1.remove(j);
                 }
             }
+            uv.setUserrole(userroles);
+            uvList.add(uv);
         }
 
+        /*for(UserVo u : list1) {
+            UserVo uv = new UserVo(u.getId(),u.getUsercode(),u.getUsername(),u.getPassword(),u.getSalt(),u.getLocked(),u.getUserrole());
+            uvList.add(uv);
+        }*/
 
         //获得数据记录数
         Long count = new Long(list1.size());
