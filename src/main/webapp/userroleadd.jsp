@@ -60,6 +60,8 @@
 <script type="text/javascript" src="./frame/layui3/layui.js"></script>
 <script>
 
+    var userid;
+
     //全局定义一次, 加载formSelects
     layui.config({
         base: 'js/src/' //此处路径请自行处理, 可以使用绝对路径
@@ -76,24 +78,37 @@
             $ = layui.jquery;
 
 
-        //加载下拉框的角色选择
-        /*$.ajax({
-            type:"POST",
-            dataType:"json",
-            url:"/userController/findAllRole.action",
-            success:function(data) {
-                for(var i = 0; i < data.length; i++){
-                    $("#userrole").append("<option value=" + data[i].id + ">" + data[i].name + "</option>");
-                }
-                form.render();
-            }
-        });*/
-
-
-
         //监听提交
         form.on('submit(demo1)', function(data){
-            alert(data.field.userrole);
+
+            //alert(data.field.userrole);
+            /*var userroles = data.field.userrole.split(",");
+
+            var roleids = "";
+            $.ajax({
+                type:"POST",
+                dataType:"json",
+                url:"/userController/findUserAllRole.action",
+                data:{
+                    id:userid
+                },
+                success:function(role) {
+                    for(var i = 0; i < role.length; i++){
+                        for(var j = 0; j < userroles.length; j++){
+                            //判断用户本身具有的角色如何和下拉框选中的一样，就什么都不做
+                            if(role[i] != userroles[j]) {
+                                roleids = roleids + "," + userroles[j];
+                            }
+                        }
+                    }
+                    alert(roleids);
+
+
+                    //判断是增加角色还是删除角色还是没有改变
+                    //form.render();
+                }
+            });*/
+
             $.ajax({
                 type:"post",
                 dataType:"json",
@@ -114,8 +129,10 @@
                         layer.msg("添加失败", {icon: 6});
                     }
                 }
-            })
+            });
         });
+
+
     });
 
     //父页面调用实现增加
@@ -131,10 +148,15 @@
 
     //填充表单
     function child(obj){
+        userid = obj.id;
         layui.use(['form', 'layedit', 'laydate', 'formSelects'], function() {
             var form = layui.form,
                 $ = layui.jquery,
                 formSelects = layui.formSelects;
+
+            $("#id").val(obj.id);
+            $("#usercode").val(obj.usercode);
+            $("#username").val(obj.username);
 
             formSelects.data('userrole', 'server', {
                 url: '/userController/findAllRole.action',
@@ -192,10 +214,6 @@
                     //formSelects.value('example5_5', [result.data[0].value, result.data[4].value]);
                 }
             });*/
-
-            $("#id").val(obj.id);
-            $("#usercode").val(obj.usercode);
-            $("#username").val(obj.username);
             //$("#abc").val(["2","3"]);
             //$("#userrole").val(["2","3"]);
             //$("#userrole").val("spgly");

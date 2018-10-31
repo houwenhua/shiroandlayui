@@ -287,7 +287,7 @@
 </script>
 <!-- 表格操作按钮集 -->
 <script type="text/html" id="barOption">
-    <a class="layui-btn layui-btn-mini" lay-event="detail">添加角色</a>
+    <a class="layui-btn layui-btn-mini" lay-event="detail">操作角色</a>
     <a class="layui-btn layui-btn-mini layui-btn-normal" lay-event="edit">编辑</a>
     <a class="layui-btn layui-btn-mini layui-btn-danger" lay-event="del" id="del">删除</a>
 </script>

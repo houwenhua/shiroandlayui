@@ -102,13 +102,43 @@ public class UserController {
 
     /**
      * 增加用户角色
+     * 一个用交叉并补集实现的算法
      */
     @RequiresRoles("用户管理员")
     @RequestMapping(value = "/addUserRoles",method = RequestMethod.POST,produces = "application/json;charset=utf-8")
     @ResponseBody
     public String addUserRoles(String id,String userrole) {
         System.out.println(id + ":" + userrole);
-        us.addUserRoles(id,userrole);
+        //获得用户已经具有的角色
+        List<String> roleids = findUserAllRole(id);
+
+        //作为求交集和临时集合，直接等于的话其实地址还是相同的
+        //List<String> temp = roleids;
+        List<String> temp = new ArrayList<>();
+        for(String roleid : roleids) {
+            temp.add(roleid);
+        }
+
+
+        //获得前台下拉框的角色
+        String[] ids = userrole.split(",");
+        List<String> newList = new ArrayList<>();
+        for(String roleid : ids) {
+            newList.add(roleid);
+        }
+
+        //得到两个共有的集合部分，这部分不做任何改变
+        temp.retainAll(newList);
+
+        //求已经有的角色与共有部分的差集，得到已经删除的角色
+        roleids.removeAll(temp);
+        //求前台下拉框的角色与共有部分的差集，得到新增加的角色
+        newList.removeAll(temp);
+
+        //实现增加
+        us.addUserRoles(id,newList);
+        //实现删除
+        us.deleteUserRoles(id,roleids);
         return "1";
     }
 }

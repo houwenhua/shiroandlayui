@@ -84,4 +84,33 @@ public class UserService {
             um.addUserRoles(id,roleids[i]);
         }
     }
+
+    /**
+     * 重载
+     * @param id
+     * @param urList
+     */
+    public void addUserRoles(String id, List<String> urList) {
+        for(String role: urList) {
+            um.addUserRoles(id,role);
+        }
+    }
+
+    /**
+     * 删除角色信息
+     * @param id
+     * @param roleids
+     */
+    public void deleteUserRoles(String id, List<String> roleids) {
+        String ids = "";
+        for(String role : roleids) {
+            ids = ids + "," + role;
+        }
+
+        if(ids != "") {
+            String temp = ids.substring(1,ids.length());
+            ids = temp;
+            um.dedeleteUserRoles(id,ids);
+        }
+    }
 }
