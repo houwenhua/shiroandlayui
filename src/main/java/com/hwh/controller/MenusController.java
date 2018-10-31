@@ -37,12 +37,12 @@ public class MenusController {
         Map<String, Object> map = new LinkedHashMap<String, Object>();
         //String jsonStr = JSON.toJSONString(list);
         map.put("data",list);
-        JSONObject json = new JSONObject(map);
+        /*JSONObject json = new JSONObject(map);
         try {
             wirteJsonToFile(json);
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
         return map;
     }
 

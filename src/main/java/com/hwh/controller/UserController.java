@@ -61,6 +61,7 @@ public class UserController {
     @ResponseBody
     public String batchDelete(String ids) {
         System.out.println("执行删除方法******"+ids);
+        us.deleteBatchUser(ids);
         return "1";
     }
 

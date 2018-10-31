@@ -78,6 +78,17 @@ public class UserService {
         um.deleteUserRoleByUserId(id);
     }
 
+    /**
+     * 批量删除用户和对应的角色信息
+     * @param ids
+     */
+    public void deleteBatchUser(String ids) {
+        String[] idArr = ids.split(",");
+        for(int i = 0; i < idArr.length; i++) {
+            deleteUser(idArr[i]);
+        }
+    }
+
     //增加角色信息
     public void addUserRoles(String id, String userrole) {
         String[] roleids = userrole.split(",");

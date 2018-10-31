@@ -78,7 +78,7 @@
             done: function (res, curr, count) {
                 var data = res.data;
                 for(var i = 0; i < data.length; i++) {
-                    if(data[i].usercode === "admin" && data[i].userrole === "用户管理员") {
+                    if(data[i].usercode === "admin") {// && data[i].userrole === "用户管理员"
                         $("#del").addClass("layui-btn-disabled");
                         $("#del").click(function () {
                             return false;
@@ -246,7 +246,7 @@
             var checkStatus = table.checkStatus('dataCheck');
             var ids = "";
             for(var i = 0; i < checkStatus.data.length; i++) {
-                if(checkStatus.data[i].usercode === "admin" && checkStatus.data[i].userrole === "用户管理员") {
+                if(checkStatus.data[i].usercode === "admin") {
                     layer.msg('系统管理员不能删除！！！',{icon: 5});
                     return false;
                 }
