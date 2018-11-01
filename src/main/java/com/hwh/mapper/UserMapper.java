@@ -34,4 +34,6 @@ public interface UserMapper {
     void deleteUserRoleByUserId(String id);
 
     Integer updateUser(User u);
+
+    List<UserVo> getPageAllUserVos(@Param("username") String username, @Param("page") int page, @Param("limit") int limit);
 }

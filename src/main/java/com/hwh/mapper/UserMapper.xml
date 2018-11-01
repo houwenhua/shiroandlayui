@@ -47,4 +47,17 @@
         update sys_user set username = #{username},
         password = #{password},salt = #{salt},locked = #{locked} where id = #{id}
     </update>
+
+    <select id="getPageAllUserVos" parameterType="String" resultType="com.hwh.vo.UserVo" >
+        select u.*,r.name userrole from sys_user u
+        left join sys_user_role ur on u.id = ur.sys_user_id
+        left join sys_role r on ur.sys_role_id = r.id
+        <where>
+            <if test="username != null">
+                u.username like "%"#{username}"%"
+            </if>
+        </where>
+        order by u.usercode
+        limit #{page},#{limit}
+    </select>
 </mapper>

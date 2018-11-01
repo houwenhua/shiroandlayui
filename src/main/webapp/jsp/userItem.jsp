@@ -31,7 +31,7 @@
     <span class="fr">
         <span class="layui-form-label">搜索条件：</span>
         <div class="layui-input-inline">
-            <input name="username" type="text" autocomplete="off" placeholder="请输入用户姓名" class="layui-input">
+            <input id="username" name="username" type="text" autocomplete="off" placeholder="请输入用户姓名" class="layui-input">
         </div>
         <button class="layui-btn mgl-20" id="btn-query">查询</button>
     </span>
@@ -43,10 +43,8 @@
 <script type="text/javascript" src="../frame/layui/layui.js"></script>
 <script type="text/javascript" src="../js/index.js"></script>
 <script type="text/javascript">
-
     // layui方法
     layui.use(['table', 'form', 'layer', 'vip_table'], function () {
-
         // 操作对象
         var form = layui.form
             , table = layui.table
@@ -89,35 +87,21 @@
             }
         });
 
+        //查询方法
+        $("#btn-query").click(function () {
+            var username=$("#username").val();
+                tableIns.reload({
+                    method:'post',
+                    where:{
+                        username:$.trim(username)
+                     }
+                });
+        })
 
         // 刷新
         $('#btn-refresh').on('click', function () {
             tableIns.reload();
         });
-
-        //查询方法
-        $("#btn-query").click(function () {
-            alert(111);
-            //执行一个 table 实例
-            /* table.render({
-                     elem: '#dateTable',                  //指定原始表格元素选择器（推荐id选择器）
-                     height: vipTable.getFullHeight(),    //容器高度
-                     url: '/userController/findAllUser.action'
-                     ,method:'POST'   //laui 修改请求方式
-                     ,request: {
-                         pageName: 'currentPageNo'//页码的参数名称，默认：page
-                         ,limitName: 'pageSize' //每页数据量的参数名，默认：limit
-                     },
-                     response: {
-                         statusName: 'result'//数据状态的字段名称，默认：code
-                         ,countName: 'totalCount' //数据总数的字段名称，默认：count
-                         ,dataName: 'datas' //默数据列表的字段名称，认：data        //我返回的datas集合
-                     },
-                     page: true //开启分页
-
-             });*/
-        })
-
 
         // you code ...
         //监听工具条
