@@ -37,6 +37,15 @@
         limit #{page},#{limit}
     </select>
 
+    <select id="count" parameterType="String" resultType="Long">
+        select count(*) from sys_role
+        <where>
+            <if test="name != null">
+                and name like "%"#{name}"%"
+            </if>
+        </where>
+    </select>
+
     <insert id="addRole" parameterType="String">
         insert into sys_role(id,name,available) values(#{id},#{name},#{available1})
     </insert>

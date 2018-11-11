@@ -38,7 +38,8 @@ public class RoleService {
     public DataTable getAllRoles(String name, int page, int limit) {
         //List<Role> list = rm.getAllRole();
         List<Role> list = rm.getAllRolesPage(name,(page - 1) * limit,limit);
-        Long count = new Long(list.size());
+        //Long count = new Long(list.size());
+        Long count = rm.count(name);
         DataTable dataTable = new DataTable(0,"",count,list);
         return dataTable;
     }

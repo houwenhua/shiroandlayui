@@ -72,7 +72,8 @@ public class UserService {
             uvList.add(uv);
         }
         //获得数据记录数
-        Long count = new Long(list1.size());
+        //Long count = new Long(list1.size());
+        Long count = um.count(username);
         DataTable dataTable = new DataTable(0,"",count,uvList);
         return dataTable;
     }

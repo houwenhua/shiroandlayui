@@ -38,4 +38,6 @@ public interface UserMapper {
     List<UserVo> getPageAllUserVos(@Param("username") String username, @Param("page") int page, @Param("limit") int limit);
 
     void updateLocked(@Param("id")String id,@Param("locked") String locked);
+
+    Long count(@Param("username")String username);
 }

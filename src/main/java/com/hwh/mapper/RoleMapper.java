@@ -36,4 +36,6 @@ public interface RoleMapper {
     void batchDelete(String ids);
 
     void updateAvailable(@Param("id") String id,@Param("available") String available);
+
+    Long count(@Param("name") String name);
 }
