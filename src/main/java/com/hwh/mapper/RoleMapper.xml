@@ -16,6 +16,7 @@
         )
     </select>
 
+    <!--available值：0代表使用，1代表锁定-->
     <select id="getAllRole" resultType="com.hwh.po.Role">
         select * from sys_role where available = '1'
     </select>
@@ -25,4 +26,34 @@
         left join sys_user_role ur on r.id = ur.sys_role_id
         where ur.sys_user_id = #{id}
     </select>
+
+    <select id="getAllRolesPage" parameterType="String" resultType="com.hwh.po.Role">
+        select * from sys_role
+        <where>
+            <if test="name != null">
+                and name like "%"#{name}"%"
+            </if>
+        </where>
+        limit #{page},#{limit}
+    </select>
+
+    <insert id="addRole" parameterType="String">
+        insert into sys_role(id,name,available) values(#{id},#{name},#{available1})
+    </insert>
+
+    <delete id="deleteRole" parameterType="String" >
+        delete from sys_role where id = #{id}
+    </delete>
+
+    <delete id="batchDelete" parameterType="String" >
+        delete from sys_role where id in #{ids}
+    </delete>
+
+    <select id="getUserRoleByRoleId" parameterType="String" resultType="com.hwh.po.UserRole">
+        select * from sys_user_role ur where ur.sys_role_id = #{id}
+    </select>
+
+    <update id="update" parameterType="com.hwh.po.Role">
+        update sys_role set name = #{name},available = #{available} where id = #{id}
+    </update>
 </mapper>

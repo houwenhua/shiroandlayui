@@ -19,6 +19,10 @@ public class MenusService {
     @Autowired
     private MenusMapper menusMapper;
 
+    /**
+     * 是根据父ID串来进行菜单加载的
+     * @return
+     */
     public List<MenusVo> getMenus() {
         List<Permission> list = menusMapper.getMenus();
 

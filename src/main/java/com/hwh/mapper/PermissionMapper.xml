@@ -23,4 +23,42 @@
            )
         )
     </select>
+
+    <select id="getAllPermissionsPage" parameterType="String" resultType="com.hwh.po.Permission">
+        select * from sys_permission
+        <where>
+            <if test="name != null">
+                and name like "%"#{name}"%"
+            </if>
+        </where>
+        limit #{page},#{limit}
+    </select>
+
+    <select id="countPermissions" parameterType="String" resultType="Long" >
+        select count(*) from sys_permission
+        <where>
+            <if test="name != null">
+                and name like "%"#{name}"%"
+            </if>
+        </where>
+    </select>
+
+    <insert id="addPermission" parameterType="com.hwh.po.Permission">
+        insert into sys_permission(name, type, url, percode, parentid, parentids, sortstring, available)
+        values (#{name},#{type},#{url},#{percode},#{parentid},#{parentids},#{sortstring},#{available})
+    </insert>
+
+    <delete id="deletePermission" parameterType="String" >
+        delete from sys_permission where id = #{id}
+    </delete>
+
+    <update id="update" parameterType="com.hwh.po.Permission">
+        update sys_permission set name = #{name},type=#{type},url=#{url},percode=#{percode},
+        parentid=#{parentid},parentids=#{parentids},sortstring=#{sortstring},available=#{available}
+        where id = #{id}
+    </update>
+
+    <delete id="batchDelete" parameterType="String">
+        delete from sys_permission where id in (#{ids})
+    </delete>
 </mapper>

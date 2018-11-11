@@ -1,13 +1,12 @@
-package com.hwh.po;
+package com.hwh.vo;
 
 /**
- * 功能描述：权限实体类
+ * 功能描述：
  *
  * @Author houwenhua
- * @Date 2018/9/15 21:03
+ * @Date 2018/11/10 13:20
  */
-public class Permission {
-
+public class PermissionVo {
     private Integer id;
 
     private String name;
@@ -25,20 +24,6 @@ public class Permission {
     private String sortstring;
 
     private String available;
-
-    public Permission() {
-    }
-
-    public Permission(String name, String type, String url, String percode, String parentid, String parentids, String sortstring, String available) {
-        this.name = name;
-        this.type = type;
-        this.url = url;
-        this.percode = percode;
-        this.parentid = parentid;
-        this.parentids = parentids;
-        this.sortstring = sortstring;
-        this.available = available;
-    }
 
     public Integer getId() {
         return id;

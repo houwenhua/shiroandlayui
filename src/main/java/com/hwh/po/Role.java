@@ -11,6 +11,20 @@ public class Role {
 
     private String available;
 
+    public Role() {
+    }
+
+    public Role(String name, String available) {
+        this.name = name;
+        this.available = available;
+    }
+
+    public Role(String id, String name, String available) {
+        this.id = id;
+        this.name = name;
+        this.available = available;
+    }
+
     public String getId() {
         return id;
     }

@@ -138,7 +138,7 @@
 
 
         // you code ...
-
+        //alert($(window).height());
 
     });
 </script>

@@ -1,6 +1,8 @@
 package com.hwh.mapper;
 
 import com.hwh.po.Role;
+import com.hwh.po.UserRole;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -18,4 +20,18 @@ public interface RoleMapper {
     List<Role> getAllRole();
 
     List<Role> getUserAllRole(String id);
+
+    List<Role> getAllRolesPage(@Param("name") String name,@Param("page") int page,@Param("limit") int limit);
+
+    //void addRole(@Param("r") Role r);
+
+    void addRole(@Param("id") String id,@Param("name") String name,@Param("available1") String available1);
+
+    void deleteRole(String id);
+
+    List<UserRole> getUserRoleByRoleId(String id);
+
+    void update(Role r);
+
+    void batchDelete(String ids);
 }

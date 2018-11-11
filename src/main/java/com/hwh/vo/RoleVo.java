@@ -10,12 +10,28 @@ public class RoleVo {
 
     private String name;
 
+    private String available;
+
     public RoleVo() {
     }
 
     public RoleVo(String id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public RoleVo(String id, String name, String available) {
+        this.id = id;
+        this.name = name;
+        this.available = available;
+    }
+
+    public String getAvailable() {
+        return available;
+    }
+
+    public void setAvailable(String available) {
+        this.available = available;
     }
 
     public String getId() {
