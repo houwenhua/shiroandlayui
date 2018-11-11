@@ -48,4 +48,8 @@ public class PermissionService {
     public void batchDelete(String ids) {
         pm.batchDelete(ids);
     }
+
+    public void updateAvailable(String id, String available) {
+        pm.updateAvailable(id,available);
+    }
 }

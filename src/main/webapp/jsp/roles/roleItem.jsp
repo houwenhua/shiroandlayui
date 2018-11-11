@@ -30,7 +30,6 @@
     <span class="fl">
         <a class="layui-btn layui-btn-danger radius btn-delect" id="btn-delete-all">批量删除</a>
         <a class="layui-btn btn-add btn-default" id="btn-add">添加</a>
-        <a class="layui-btn btn-add btn-default" id="btn-exportFile">导出</a>
         <a class="layui-btn btn-add btn-default" id="btn-refresh"><i class="layui-icon">&#x1002;</i></a>
     </span>
     <span class="fr">
@@ -183,7 +182,7 @@
             /*layer.msg('开关checked：'+ (this.checked ? 'true' : 'false'), {
                 offset: '6px'
             });*/
-            layer.tips('温馨提示：为开(true)时代表用户锁定，不可登录使用。', data.othis);
+            layer.tips('温馨提示：状态为'+ (this.checked ? 'true' : 'false'), data.othis);
             $.ajax({
                 url:'/roleController/updateAvailable.action',
                 type:'post',

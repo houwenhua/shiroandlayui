@@ -81,6 +81,14 @@ public class UserController {
         return "1";
     }
 
+    @RequiresRoles("用户管理员")
+    @RequestMapping(value = "/updateLocked",method = RequestMethod.POST,produces = "application/json;charset=utf-8")
+    @ResponseBody
+    public String updateLocked(String id,String locked) {
+        us.updateLocked(id,locked);
+        return "1";
+    }
+
 
     @RequestMapping(value = "/findAllRole",method = RequestMethod.POST,produces = "application/json;charset=utf-8")
     @ResponseBody

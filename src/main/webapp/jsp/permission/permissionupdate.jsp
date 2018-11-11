@@ -68,12 +68,12 @@
             <input type="text" id="sortstring" name="sortstring"  placeholder="请输入排序号" autocomplete="off" class="layui-input">
         </div>
     </div>
-    <div class="layui-form-item">
+    <%--<div class="layui-form-item">
         <label class="layui-form-label">是否启用</label>
         <div class="layui-input-block">
             <input type="checkbox" id="available" name="available" lay-skin="switch" lay-text="ON|OFF" lay-filter="switchLocked">
         </div>
-    </div>
+    </div>--%>
 
     <%--按钮--%>
     <div class="layui-form-item" style="display:none;">
@@ -117,7 +117,7 @@
                     parentid:$.trim(data.field.parentid),
                     parentids:$.trim(data.field.parentids),
                     sortstring:$.trim(data.field.sortstring),
-                    available:$.trim((data.field.available)==="on"?1:0)
+                    //available:$.trim((data.field.available)==="on"?1:0)
                 },
                 success:function (data) {
                     if(data === "444"){
@@ -161,10 +161,10 @@
             $("#parentids").val(obj.parentids);
             $("#sortstring").val(obj.sortstring);
             //表单初始赋值
-            form.val('example', {
+           /* form.val('example', {
                 "available":obj.available === "0"?false:true, //开关状态
             });
-            form.render();
+            form.render();*/
         });
 
     }

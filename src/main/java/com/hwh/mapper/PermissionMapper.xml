@@ -54,8 +54,12 @@
 
     <update id="update" parameterType="com.hwh.po.Permission">
         update sys_permission set name = #{name},type=#{type},url=#{url},percode=#{percode},
-        parentid=#{parentid},parentids=#{parentids},sortstring=#{sortstring},available=#{available}
+        parentid=#{parentid},parentids=#{parentids},sortstring=#{sortstring}
         where id = #{id}
+    </update>
+
+    <update id="updateAvailable" parameterType="String">
+        update sys_permission set available = #{available} where id = #{id}
     </update>
 
     <delete id="batchDelete" parameterType="String">

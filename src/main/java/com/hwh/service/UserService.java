@@ -162,4 +162,8 @@ public class UserService {
         Integer flag = um.updateUser(u);
         return flag.toString();
     }
+
+    public void updateLocked(String id, String locked) {
+        um.updateLocked(id,locked);
+    }
 }

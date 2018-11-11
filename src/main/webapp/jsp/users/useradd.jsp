@@ -1,12 +1,13 @@
 <%--
   Created by IntelliJ IDEA.
-  User: Administrator
-  Date: 2018/11/8
-  Time: 20:23
+  User: Lenovo
+  Date: 2018/10/12
+  Time: 9:43
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="renderer" content="webkit">
@@ -19,25 +20,54 @@
 </head>
 <body class="body">
 
-<form class="layui-form" lay-filter="example" action="" id="userForm" onsubmit="return false">
+<form class="layui-form" action="" id="userForm" onsubmit="return false">
     <div class="layui-form-item">
-        <label class="layui-form-label">ID</label>
+        <label class="layui-form-label">账号</label>
         <div class="layui-input-block">
-            <input type="text" id="id" name="id" lay-verify="required" placeholder="请输入ID" autocomplete="off" class="layui-input layui-disabled">
+            <input type="text" name="usercode" lay-verify="required" autocomplete="off" placeholder="请输入账号" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">角色名</label>
+        <label class="layui-form-label">姓名</label>
         <div class="layui-input-block">
-            <input type="text" id="name" name="name" lay-verify="required" placeholder="请输入角色名" autocomplete="off" class="layui-input">
+            <input type="text" name="username" lay-verify="required" placeholder="请输入姓名" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">密码</label>
+        <div class="layui-input-block">
+            <input type="password" name="password" lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
         </div>
     </div>
     <%--<div class="layui-form-item">
-        <label class="layui-form-label">是否启用</label>
+        <label class="layui-form-label">密码</label>
+        <div class="layui-input-inline">
+            <input type="password" name="pass" placeholder="请输入密码" autocomplete="off" class="layui-input">
+        </div>
+        <div class="layui-form-mid layui-word-aux">请务必填写用户名</div>
+    </div>--%>
+    <div class="layui-form-item">
+        <label class="layui-form-label">盐巴</label>
         <div class="layui-input-block">
-            <input type="checkbox" id="available" name="available" lay-skin="switch" lay-text="ON|OFF" lay-filter="switchLocked">
+            <input type="text" name="salt" lay-verify="required" placeholder="请输入加盐方式" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">是否锁定</label>
+        <div class="layui-input-block">
+            <input type="checkbox" name="locked" lay-skin="switch" lay-text="ON|OFF" lay-filter="switchLocked">
+        </div>
+    </div>
+   <%-- <div class="layui-form-item">
+        <label class="layui-form-label">角色信息</label>
+        <div class="layui-input-block">
+            <select name="userrole" lay-filter="aihao" id="zcySelect" lay-verify="required">
+                <option value=""></option>
+            </select>
         </div>
     </div>--%>
+
+
     <div class="layui-form-item" style="display:none;">
         <div class="layui-input-block">
             <button class="layui-btn" lay-submit="" lay-filter="demo1" id="btn-addtwo">保存</button>
@@ -45,26 +75,31 @@
         </div>
     </div>
 </form>
-<script src="../../frame/layui2/layui.js" charset="utf-8"></script>
+<script src="../../frame/layui/layui.js" charset="utf-8"></script>
 <script>
-    function child(obj){
-        layui.use(['form', 'layedit', 'laydate'], function() {
-            var form = layui.form
-            //表单初始赋值
-            form.val('example', {
-                "id":obj.id,
-                "name": obj.name, // "name": "value"
-                "available":obj.available === "0"?false:true, //开关状态
-            });
-            form.render();
-        });
-    }
+
+
     layui.use(['form', 'layedit', 'laydate'], function(){
         var form = layui.form
             ,layer = layui.layer
             ,layedit = layui.layedit
             ,laydate = layui.laydate,
             $ = layui.jquery;
+
+        //加载下拉框的角色选择
+        /*$.ajax({
+            type:"POST",
+            dataType:"json",
+            url:"/userController/findAllRole.action",
+            success:function(data) {
+                for(var i = 0; i < data.length; i++){
+                    $("#zcySelect").append("<option value=" + data[i].id + ">" + data[i].name + "</option>");
+                }
+                form.render();
+            }
+        });*/
+
+
 
 
         //监听指定开关
@@ -80,11 +115,14 @@
             $.ajax({
                 type:"post",
                 dataType:"json",
-                url:"/roleController/update.action",
+                url:"/userController/add.action",
                 data:{
-                    id:$.trim(data.field.id),
-                    name:$.trim(data.field.name),
-                    //available:$.trim((data.field.available)==="on"?1:0)
+                    usercode:$.trim(data.field.usercode),
+                    username:$.trim(data.field.username),
+                    password:$.trim(data.field.password),
+                    salt:$.trim(data.field.salt),
+                    locked:$.trim((data.field.locked)==="on"?1:0),
+                   /* userrole:$.trim(data.field.userrole)*/
                 },
                 success:function (data) {
                     if(data === "444"){
@@ -110,9 +148,12 @@
                 , layedit = layui.layedit
                 , laydate = layui.laydate,
                 $ = layui.jquery;
+
             //点击保存按钮
             $("#btn-addtwo").click();
         });
+
+
     }
 </script>
 </body>

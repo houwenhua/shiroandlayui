@@ -45,7 +45,11 @@
 
     <update id="updateUser" parameterType="com.hwh.po.User">
         update sys_user set username = #{username},
-        password = #{password},salt = #{salt},locked = #{locked} where id = #{id}
+        password = #{password},salt = #{salt} where id = #{id}
+    </update>
+
+    <update id="updateLocked" parameterType="String">
+        update sys_user set locked = #{locked} where id = #{id}
     </update>
 
     <select id="getPageAllUserVos" parameterType="String" resultType="com.hwh.vo.UserVo" >

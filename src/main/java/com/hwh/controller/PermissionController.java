@@ -50,6 +50,13 @@ public class PermissionController {
         return "1";
     }
 
+    @RequestMapping(value = "/updateAvailable",method = RequestMethod.POST,produces = "application/json;charset=utf-8")
+    @ResponseBody
+    public String updateAvailable(String id,String available) {
+        ps.updateAvailable(id,available);
+        return "1";
+    }
+
     @RequestMapping(value = "/batchDelete",method = RequestMethod.POST,produces = "application/json;charset=utf-8")
     @ResponseBody
     public String batchDelete(String ids) {

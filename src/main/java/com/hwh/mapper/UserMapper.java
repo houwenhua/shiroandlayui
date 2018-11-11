@@ -36,4 +36,6 @@ public interface UserMapper {
     Integer updateUser(User u);
 
     List<UserVo> getPageAllUserVos(@Param("username") String username, @Param("page") int page, @Param("limit") int limit);
+
+    void updateLocked(@Param("id")String id,@Param("locked") String locked);
 }
