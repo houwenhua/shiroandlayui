@@ -56,4 +56,8 @@
     <update id="update" parameterType="com.hwh.po.Role">
         update sys_role set name = #{name},available = #{available} where id = #{id}
     </update>
+
+    <update id="updateAvailable" parameterType="String">
+        update sys_role set available = #{available} where id = #{id}
+    </update>
 </mapper>

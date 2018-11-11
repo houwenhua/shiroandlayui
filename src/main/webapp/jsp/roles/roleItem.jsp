@@ -93,30 +93,7 @@
                         })
                     }
                 }*/
-            },
-            onLoadSuccess: function (data) {
-                alert(1);
-                layui.use('form', function(){
-                    var form = layui.form;
-                    form.render('checkbox');
-                    form.on('switch(isValid)', function(data){
-                        changState(data.value,data.elem.checked);
-                    });
-                    form.on('switch(isTraining)', function(data){
-                        changState1(data.value,data.elem.checked);
-                    });
-                    form.on('switch(isTraining)', function(data){
-                        changState1(data.value,data.elem.checked);
-                    });
-                });
             }
-        });
-        //监听指定开关
-        form.on('switch(switchLocked)', function(data){
-            layer.msg('开关checked：'+ (this.checked ? 'true' : 'false'), {
-                offset: '6px'
-            });
-            /*layer.tips('温馨提示：为开(true)时代表用户锁定，不可登录使用。', data.othis)*/
         });
 
         //查询方法
@@ -201,6 +178,27 @@
             }
         });
 
+        //监听指定开关
+        form.on('switch(switchLocked)', function(data){
+            /*layer.msg('开关checked：'+ (this.checked ? 'true' : 'false'), {
+                offset: '6px'
+            });*/
+            layer.tips('温馨提示：为开(true)时代表用户锁定，不可登录使用。', data.othis);
+            $.ajax({
+                url:'/roleController/updateAvailable.action',
+                type:'post',
+                data:{
+                    id:data.value,
+                    available:this.checked ? '1' : '0'
+                },
+                success:function(data) {
+                    if(data === "1") {
+                        layer.msg("修改成功", {icon: 6});
+                    }
+                }
+            })
+        });
+
         $('#btn-add').on('click', function () {
             layer.open({
                 type: 2,
@@ -282,7 +280,7 @@
     <a class="layui-btn layui-btn-mini layui-btn-danger" lay-event="del" id="del">删除</a>
 </script>
 <script type="text/html" id="switchTpl">
-    <input type="checkbox" name="available" value="{{d.available}}" lay-skin="switch" lay-text="开|关" lay-filter="sexDemo" {{ d.available == 0 ? 'checked' : '' }}>
+    <input type="checkbox" name="available" value="{{d.id}}" lay-skin="switch" lay-text="开|关" lay-filter="switchLocked" {{ d.available === '1' ? 'checked' : '' }}>
 </script>
 </body>
 </html>

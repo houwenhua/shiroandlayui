@@ -91,4 +91,8 @@ public class RoleService {
         ids = "(" + ids +")";
         rm.batchDelete(ids);*/
     }
+
+    public void updateAvailable(String id,String available) {
+        rm.updateAvailable(id,available);
+    }
 }
