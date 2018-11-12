@@ -21,6 +21,7 @@
     <style>
         .layui-form-switch{
             width:50px;
+            margin-top: 0px !important;
         }
     </style>
 </head>

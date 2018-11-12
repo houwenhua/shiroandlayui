@@ -21,6 +21,12 @@
     <style>
         .layui-form-switch{
             width:50px;
+            margin-top: 0px !important;
+        }
+
+        .layui-table-view{
+            width: 50%;
+            display: inline-block;
         }
     </style>
 </head>
@@ -43,6 +49,7 @@
 
 <!-- 表格 -->
 <div id="dateTable" lay-filter="dateTable"></div>
+<div style="width:45%;height: 500px;display: inline-block;background: red;margin-bottom: 16px;"></div>
 
 <script type="text/javascript" src="../../frame/layui3/layui.js"></script>
 <%--<script type="text/javascript" src="../../js/index.js"></script>--%>
@@ -60,6 +67,7 @@
         // 表格渲染
         var tableIns = table.render({
             elem: '#dateTable',                  //指定原始表格元素选择器（推荐id选择器）
+            width:'200px',
             height: $(window).height() - ( $('.my-btn-box').outerHeight(true) ? $('.my-btn-box').outerHeight(true) + 35 :  40 ),    //容器高度
             cols: [[                  //标题栏
                 {checkbox: true, sort: true, fixed: true, space: true},
