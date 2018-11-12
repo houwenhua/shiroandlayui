@@ -69,4 +69,23 @@
     <update id="updateAvailable" parameterType="String">
         update sys_role set available = #{available} where id = #{id}
     </update>
+
+    <select id="findPermissionByParendId" parameterType="Integer" resultType="com.hwh.po.Permission">
+        select * from sys_permission where parentid = #{parendid}
+    </select>
+
+    <select id="findPermissionByRoleId" parameterType="String" resultType="com.hwh.po.Permission">
+        select p.* from sys_permission p
+        left join sys_role_permission rp on p.id = rp.sys_permission_id
+        where
+        rp.sys_role_id = #{id}
+    </select>
+
+    <delete id="deleteRolePermissionsByRoleId" parameterType="String" >
+        delete from sys_role_permission where sys_role_id = #{roleid} and sys_permission_id = #{id}
+    </delete>
+
+    <insert id="addRolePermissions" parameterType="String">
+        insert into sys_role_permission(sys_role_id, sys_permission_id) values(#{roleid},#{id})
+    </insert>
 </mapper>

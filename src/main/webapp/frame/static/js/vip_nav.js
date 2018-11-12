@@ -15,6 +15,7 @@ layui.define(['layer', 'element'], function (exports) {
         addHtml: function (addr, obj, treeStatus, data) {
             // 请求数据
             $.get(addr, data, function (res) {
+                //console.log(res);
                 var view = "";
                 if (res.data) {
                     $(res.data).each(function (k, v) {

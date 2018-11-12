@@ -24,10 +24,10 @@
             margin-top: 0px !important;
         }
 
-        .layui-table-view{
+       /* .layui-table-view{
             width: 50%;
             display: inline-block;
-        }
+        }*/
     </style>
 </head>
 <body class="body">
@@ -48,8 +48,8 @@
 </div>
 
 <!-- 表格 -->
-<div id="dateTable" lay-filter="dateTable"></div>
-<div style="width:45%;height: 500px;display: inline-block;background: red;margin-bottom: 16px;"></div>
+<table id="dateTable" lay-filter="dateTable"></table>
+<%--<div style="width:45%;height: 500px;display: inline-block;background: red;margin-bottom: 16px;"></div>--%>
 
 <script type="text/javascript" src="../../frame/layui3/layui.js"></script>
 <%--<script type="text/javascript" src="../../js/index.js"></script>--%>
@@ -67,7 +67,6 @@
         // 表格渲染
         var tableIns = table.render({
             elem: '#dateTable',                  //指定原始表格元素选择器（推荐id选择器）
-            width:'200px',
             height: $(window).height() - ( $('.my-btn-box').outerHeight(true) ? $('.my-btn-box').outerHeight(true) + 35 :  40 ),    //容器高度
             cols: [[                  //标题栏
                 {checkbox: true, sort: true, fixed: true, space: true},
@@ -123,7 +122,33 @@
         table.on('tool(dateTable)', function(obj){
             var data = obj.data;
             if(obj.event === 'detail'){
-
+                layer.open({
+                    type: 2,
+                    title: data.name,
+                    shadeClose: false,
+                    anim:0,//动画平滑放大。默认
+                    shade: 0.8,
+                    maxmin:true,
+                    btn:['保存','取消'],
+                    area: ['30%', '90%'],
+                    content: 'rolePermission.jsp', //iframe的url
+                    success: function(layero, index){
+                        var iframe = window['layui-layer-iframe' + index];
+                        //传递选中行的id值
+                        iframe.child(data);
+                    },
+                    yes: function(index,layero){
+                        var body = layer.getChildFrame('body', index);
+                        var iframeWin = window[layero.find('iframe')[0]['name']]; //得到iframe页的窗口对象，执行iframe页的方法：iframeWin.method();
+                        iframeWin.addRolePermission();
+                    },
+                    btn2: function(){
+                        //alert("这是点击取消按钮走的回调");
+                    },
+                    end:function () {
+                        tableIns.reload();
+                    }
+                });
             } else if(obj.event === 'del'){
                 if(data.id === "yhgly") {
                     layer.msg('系统管理员角色不能删除！！！',{icon: 5});
@@ -282,7 +307,7 @@
 </script>
 <!-- 表格操作按钮集 -->
 <script type="text/html" id="barOption">
-   <%-- <a class="layui-btn layui-btn-mini" lay-event="detail">操作角色</a>--%>
+    <a class="layui-btn layui-btn-mini" lay-event="detail">操作资源</a>
     <a class="layui-btn layui-btn-mini layui-btn-normal" lay-event="edit">编辑</a>
     <a class="layui-btn layui-btn-mini layui-btn-danger" lay-event="del" id="del">删除</a>
 </script>

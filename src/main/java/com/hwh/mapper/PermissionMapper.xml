@@ -65,4 +65,8 @@
     <delete id="batchDelete" parameterType="String">
         delete from sys_permission where id in (#{ids})
     </delete>
+
+    <select id="getAllPermissions" resultType="com.hwh.po.Permission">
+        select * from sys_permission
+    </select>
 </mapper>

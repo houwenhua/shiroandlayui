@@ -1,5 +1,6 @@
 package com.hwh.mapper;
 
+import com.hwh.po.Permission;
 import com.hwh.po.Role;
 import com.hwh.po.UserRole;
 import org.apache.ibatis.annotations.Param;
@@ -38,4 +39,12 @@ public interface RoleMapper {
     void updateAvailable(@Param("id") String id,@Param("available") String available);
 
     Long count(@Param("name") String name);
+
+    List<Permission> findPermissionByParendId(@Param("parendid") Integer parendid);
+
+    List<Permission> findPermissionByRoleId(@Param("id")String id);
+
+    void deleteRolePermissionsByRoleId(@Param("roleid")String roleid,@Param("id") String id);
+
+    void addRolePermissions(@Param("roleid")String roleid,@Param("id") String id);
 }

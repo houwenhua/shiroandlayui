@@ -29,4 +29,6 @@ public interface PermissionMapper {
     void batchDelete(@Param("ids") String ids);
 
     void updateAvailable(@Param("id")String id,@Param("available") String available);
+
+    List<Permission> getAllPermissions();
 }

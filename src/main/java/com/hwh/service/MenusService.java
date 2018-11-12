@@ -41,7 +41,7 @@ public class MenusService {
             //判断是第几级菜单，根据长度判断
             //第一级菜单
             if(len == 1) {
-                MenusVo mv = new MenusVo(p.getId(),p.getName(),"&#xe621;",p.getUrl(),null);
+                MenusVo mv = new MenusVo(p.getId(),p.getName(),"&#xe68e;",p.getUrl(),null);
                 menusVoList1.add(mv);
 
                 //根据有多少个一级菜单，就创建多少个二级菜单的集合，集合名字就subMenu+一级菜单的id
@@ -58,7 +58,7 @@ public class MenusService {
                 //第二级菜单，再实现是哪个的上一级菜单，根据parentid的最后一位数判断
                 for(MenusVo mv : menusVoList1) {
                     if (p.getParentid().equals(mv.getId().toString())) {
-                        MenusVo mvtwo = new MenusVo(p.getId(),p.getName(),"&#xe621;",p.getUrl(),null);
+                        MenusVo mvtwo = new MenusVo(p.getId(),p.getName(),"&#xe705;",p.getUrl(),null);
                         subMenu[mv.getId()].add(mvtwo);
                         mv.setSubset(subMenu[mv.getId()]);
                     }
@@ -93,7 +93,7 @@ public class MenusService {
             //判断是第几级菜单，根据长度判断
             //第一级菜单
             if(len == 1) {
-                MenusVo mv = new MenusVo(p.getId(),p.getName(),"&#xe621;",p.getUrl(),null);
+                MenusVo mv = new MenusVo(p.getId(),p.getName(),"&#xe68e;",p.getUrl(),null);
                 menusVoList1.add(mv);
 
                 //根据有多少个一级菜单，就创建多少个二级菜单的集合，集合名字就subMenu+一级菜单的id
@@ -110,7 +110,7 @@ public class MenusService {
                 //第二级菜单，再实现是哪个的上一级菜单，根据parentid的最后一位数判断
                 for(MenusVo mv : menusVoList1) {
                     if (p.getParentid().equals(mv.getId().toString())) {
-                        MenusVo mvtwo = new MenusVo(p.getId(),p.getName(),"&#xe621;",p.getUrl(),null);
+                        MenusVo mvtwo = new MenusVo(p.getId(),p.getName(),"&#xe705;",p.getUrl(),null);
                         subMenu[mv.getId()].add(mvtwo);
                         mv.setSubset(subMenu[mv.getId()]);
                     }
