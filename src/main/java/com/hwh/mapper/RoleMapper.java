@@ -47,4 +47,6 @@ public interface RoleMapper {
     void deleteRolePermissionsByRoleId(@Param("roleid")String roleid,@Param("id") String id);
 
     void addRolePermissions(@Param("roleid")String roleid,@Param("id") String id);
+
+    void deleteRolePermission(@Param("id")String id);
 }

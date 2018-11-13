@@ -28,6 +28,7 @@ public class RoleController {
     @Autowired
     private RoleService rs;
 
+    @RequiresRoles("用户管理员")
     @RequestMapping(value = "/findAllRole",method = RequestMethod.POST,produces = "application/json;charset=utf-8")
     @ResponseBody
     public DataTable findAllRole(String name,int page,int limit) {
@@ -57,6 +58,7 @@ public class RoleController {
         return "1";
     }
 
+    @RequiresRoles("用户管理员")
     @RequestMapping(value = "/update",method = RequestMethod.POST,produces = "application/json;charset=utf-8")
     @ResponseBody
     public String update(RoleVo rv) {
@@ -64,6 +66,7 @@ public class RoleController {
         return "1";
     }
 
+    @RequiresRoles("用户管理员")
     @RequestMapping(value = "/updateAvailable",method = RequestMethod.POST,produces = "application/json;charset=utf-8")
     @ResponseBody
     public String updateAvailable(String id,String available) {
@@ -71,30 +74,34 @@ public class RoleController {
         return "1";
     }
 
+    @RequiresRoles("用户管理员")
     @RequestMapping(value = "/batchDelete",method = RequestMethod.POST,produces = "application/json;charset=utf-8")
     @ResponseBody
     public String batchDelete(String ids) {
-        rs.batchDelete(ids);
+        String[] idArr = ids.split(",");
+        //获得所有的用户角色
+        for(String id : idArr) {
+            List<UserRole> ur = rs.getUserRoleByRoleId(id);
+            if(ur == null || ur.size() <= 0) {
+                rs.deleteRole(id);
+            } else {
+                return "555";
+            }
+        }
+        //rs.batchDelete(ids);
         return "1";
     }
 
+    @RequiresRoles("用户管理员")
     @RequestMapping(value = "/findPermissionMenu",method = RequestMethod.POST,produces = "application/json;charset=utf-8")
     @ResponseBody
     public List<PermissionMenuVo> findPermissionMenu(String id) {
-       /* List<PermissionMenuVo> list = new ArrayList<>();
-        PermissionMenuVo pv1 = new PermissionMenuVo("1","0","菜单一");
-        PermissionMenuVo pv11 = new PermissionMenuVo("11", "1","菜单一一");
-        PermissionMenuVo pv12 = new PermissionMenuVo("12","1","菜单一二");
-        pv12.setChecked(true);
-
-        list.add(pv1);
-        list.add(pv11);
-        list.add(pv12);*/
 
         List<PermissionMenuVo> pvList = rs.findPermissionMenu(id);
         return pvList;
     }
 
+    @RequiresRoles("用户管理员")
     @RequestMapping(value = "/addRolePermission",method = RequestMethod.POST,produces = "application/json;charset=utf-8")
     @ResponseBody
     public String addRolePermission(String roleid,String ids) {

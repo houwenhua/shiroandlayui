@@ -68,6 +68,8 @@ public class RoleService {
 
     public void deleteRole(String id) {
         rm.deleteRole(id);
+        //删除角色对应的role和资源信息
+        rm.deleteRolePermission(id);
     }
 
     public List<UserRole> getUserRoleByRoleId(String id) {

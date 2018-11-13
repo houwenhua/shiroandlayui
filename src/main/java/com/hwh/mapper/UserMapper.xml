@@ -4,8 +4,9 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hwh.mapper.UserMapper">
 
+    <!--locked为1代表锁定，不能使用，为0才能使用-->
     <select id="getUserByUserCode" resultType="com.hwh.po.User" parameterType="String">
-        select * from sys_user where usercode = #{usercode}
+        select * from sys_user where usercode = #{usercode} and locked = '0'
     </select>
 
    <select id="getAllUsers" resultType="com.hwh.po.User" >

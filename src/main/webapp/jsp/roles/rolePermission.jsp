@@ -23,7 +23,7 @@
 </HEAD>
 <BODY class="body">
 <div>
-    <input type="text" id="id" name="id" lay-verify="required" placeholder="请输入ID" autocomplete="off" class="layui-input layui-disabled">
+    <input style="display: none" type="text" id="id" name="id" lay-verify="required" placeholder="请输入ID" autocomplete="off" class="layui-input layui-disabled">
     <div style="margin:0 auto;">
        <ul id="treeDemo" class="ztree" style="margin:0 auto;"></ul>
     </div>
