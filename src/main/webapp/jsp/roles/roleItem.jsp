@@ -215,6 +215,10 @@
             /*layer.msg('开关checked：'+ (this.checked ? 'true' : 'false'), {
                 offset: '6px'
             });*/
+            // 获取当前控件
+            var selectIfKey=data.othis;
+            // 获取当前所在行
+            var parentTr = selectIfKey.parents("tr");
             layer.tips('温馨提示：状态为'+ (this.checked ? 'true' : 'false'), data.othis);
             $.ajax({
                 url:'/roleController/updateAvailable.action',
@@ -226,6 +230,14 @@
                 success:function(data) {
                     if(data === "1") {
                         layer.msg("修改成功", {icon: 6});
+                    }else if(data == '555'){
+
+                        var switchIfNull=$(parentTr).find("td:eq(3)").find("div:eq(1)");
+                        // 修改div的样式为F的样式,F的值
+                        switchIfNull.prop("class","layui-unselect layui-form-switch layui-form-onswitch");//F的样式
+                        switchIfNull.find("em").text("开");
+
+                        layer.msg("该角色已经被使用，不能被关闭！！！", {icon: 5});
                     }
                 }
             })

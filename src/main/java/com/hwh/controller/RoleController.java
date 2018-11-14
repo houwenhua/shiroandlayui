@@ -70,6 +70,13 @@ public class RoleController {
     @RequestMapping(value = "/updateAvailable",method = RequestMethod.POST,produces = "application/json;charset=utf-8")
     @ResponseBody
     public String updateAvailable(String id,String available) {
+        List<UserRole> ur = rs.getUserRoleByRoleId(id);
+        //如果没有用户使用该角色，就可以删除
+        if(ur == null || ur.size() <= 0) {
+
+        } else {
+            return "555";
+        }
         rs.updateAvailable(id,available);
         return "1";
     }
