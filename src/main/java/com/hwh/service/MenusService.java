@@ -107,7 +107,7 @@ public class MenusService {
             String[] parentid = parentids.split("/");
             int len = parentid.length;
             if(len == 2) {
-                //第二级菜单，再实现是哪个的上一级菜单，根据parentid的最后一位数判断
+                //第二级菜单，再实现是哪个的上一级菜单，根据parentid和第一级菜单的id相等判断
                 for(MenusVo mv : menusVoList1) {
                     if (p.getParentid().equals(mv.getId().toString())) {
                         MenusVo mvtwo = new MenusVo(p.getId(),p.getName(),"&#xe705;",p.getUrl(),null);

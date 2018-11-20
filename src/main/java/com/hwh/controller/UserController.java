@@ -70,7 +70,7 @@ public class UserController {
     @ResponseBody
     public String add(UserVo user) {
         String flag = us.addUser(user);
-        return "1";
+        return flag;
     }
 
     @RequiresRoles("用户管理员")
