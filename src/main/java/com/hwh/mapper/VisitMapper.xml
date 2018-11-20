@@ -7,4 +7,11 @@
         insert into sys_visit_log(id, visit_date, oper_name, sys_user_id) values(#{id},#{visitdate},#{opername},#{userid})
     </insert>
 
+    <select id="findVisitLog" resultType="com.hwh.vo.VisitLogVo">
+        select log.visit_date, u.username,log.oper_name from sys_visit_log log
+        left join sys_user u on log.sys_user_id = u.id
+        order by
+        log.visit_date desc
+        limit 0,15
+    </select>
 </mapper>

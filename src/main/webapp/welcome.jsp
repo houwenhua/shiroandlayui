@@ -22,7 +22,7 @@
                     <div class="layui-card">
                         <div class="layui-card-header">今日访问</div>
                         <div class="layui-card-body">
-                            <div class="layui-colla-content layui-show">
+                            <div class="layui-colla-content layui-show" style="border-top: 1px solid #e2e2e2;">
                                 <div id="main" style="height: 450px;"></div>
                             </div>
                         </div>
@@ -32,43 +32,18 @@
         </div>
         <div class="layui-col-md4">
             <div class="layui-card">
-                <div class="layui-card-header">版本信息</div>
+                <div class="layui-card-header">操作信息</div>
                 <div class="layui-card-body layui-text">
-                    <table class="layui-table">
+                    <table class="layui-table" id="tab">
                         <colgroup>
                             <col width="100">
                             <col>
                         </colgroup>
                         <tbody>
                         <tr>
-                            <td>当前版本</td>
-                            <td>
-                                <script type="text/html" template="">
-                                    v{{ layui.admin.v }}
-                                    <a href="http://fly.layui.com/docs/3/" target="_blank" style="padding-left: 15px;">更新日志</a>
-                                </script> v1.2.1 std <a href="http://fly.layui.com/docs/3/" target="_blank" style="padding-left: 15px;">更新日志</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>基于框架</td>
-                            <td>
-                                <script type="text/html" template="">
-                                    layui-v{{ layui.v }}
-                                </script> layui-v2.4.5
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>主要特色</td>
-                            <td>零门槛 / 响应式 / 清爽 / 极简</td>
-                        </tr>
-                        <tr>
-                            <td>获取渠道</td>
-                            <td style="padding-bottom: 0;">
-                                <div class="layui-btn-container">
-                                    <a href="http://www.layui.com/admin/" target="_blank" class="layui-btn layui-btn-danger">获取授权</a>
-                                    <a href="http://fly.layui.com/download/layuiAdmin/" target="_blank" class="layui-btn">立即下载</a>
-                                </div>
-                            </td>
+                            <th style="width: 150px;">日期</th>
+                            <th>用户</th>
+                            <th>操作</th>
                         </tr>
                         </tbody>
                     </table>
@@ -178,6 +153,24 @@
 
         // 使用刚指定的配置项和数据显示图表。
         myChart.setOption(option);
+    });
+</script>
+<script>
+    layui.use(['element', 'form', 'table', 'layer'], function () {
+        var $ = layui.jquery;
+        //获得最新的15条日志信息
+        $.ajax({
+            url:"/visitController/findVisitLog.action",
+            type:"post",
+            dataType:"json",
+            success:function (data) {
+                var html = "";
+                for(var i = 0; i < data.length ; i++) {
+                    html = html + "<tr><td>"+data[i].visitdatetemp+"</td><td>"+data[i].username+"</td><td>"+data[i].opername+"</td></tr>";
+                }
+                $("#tab").append(html);
+            }
+        })
     });
 </script>
 </html>

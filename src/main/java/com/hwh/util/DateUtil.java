@@ -15,4 +15,9 @@ public class DateUtil {
         Date formatDate = sdf.parse(sdf.format(date));
         return formatDate;
     }
+
+    public static String getFormatDateStr(Date date) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return sdf.format(date);
+    }
 }
