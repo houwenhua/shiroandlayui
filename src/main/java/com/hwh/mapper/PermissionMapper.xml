@@ -67,6 +67,10 @@
     </delete>
 
     <select id="getAllPermissions" resultType="com.hwh.po.Permission">
-        select * from sys_permission
+        select * from sys_permission where available = '1'
+    </select>
+
+    <select id="getRolePermissionByPermissionId" parameterType="String" resultType="com.hwh.po.RolePermission">
+        select * from sys_role_permission where sys_permission_id = #{id}
     </select>
 </mapper>

@@ -157,6 +157,8 @@
                                     //关闭弹框
                                     layer.close(index);
                                     layer.msg("删除成功", {icon: 6});
+                                }else if(data == '555'){
+                                    layer.msg("该资源已经被使用，不能删除！！！", {icon: 5});
                                 }else{
                                     layer.msg("删除失败", {icon: 5});
                                 }
@@ -250,6 +252,8 @@
                                 //关闭弹框
                                 layer.close(index);
                                 layer.msg("删除成功", {icon: 6});
+                            }else if(data == '555'){
+                                layer.msg("该资源已经被使用，不能删除！！！", {icon: 5});
                             }else{
                                 layer.msg("删除失败", {icon: 5});
                             }

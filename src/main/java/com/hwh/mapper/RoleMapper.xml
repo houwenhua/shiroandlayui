@@ -79,6 +79,7 @@
         left join sys_role_permission rp on p.id = rp.sys_permission_id
         where
         rp.sys_role_id = #{id}
+        and available = '1'
     </select>
 
     <delete id="deleteRolePermissionsByRoleId" parameterType="String" >

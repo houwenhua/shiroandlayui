@@ -1,6 +1,7 @@
 package com.hwh.mapper;
 
 import com.hwh.po.Permission;
+import com.hwh.po.RolePermission;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -31,4 +32,6 @@ public interface PermissionMapper {
     void updateAvailable(@Param("id")String id,@Param("available") String available);
 
     List<Permission> getAllPermissions();
+
+    List<RolePermission> getRolePermissionByPermissionId(@Param("id")String id);
 }

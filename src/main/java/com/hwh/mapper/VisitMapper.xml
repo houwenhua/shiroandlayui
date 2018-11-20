@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hwh.mapper.VisitMapper">
+    <insert id="add" parameterType="com.hwh.po.VisitLog">
+        insert into sys_visit_log(id, visit_date, oper_name, sys_user_id) values(#{id},#{visitdate},#{opername},#{userid})
+    </insert>
+
+</mapper>

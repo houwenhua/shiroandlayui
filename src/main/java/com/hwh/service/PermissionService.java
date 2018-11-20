@@ -3,6 +3,7 @@ package com.hwh.service;
 import com.hwh.mapper.PermissionMapper;
 import com.hwh.po.Permission;
 import com.hwh.po.Role;
+import com.hwh.po.RolePermission;
 import com.hwh.vo.DataTable;
 import com.hwh.vo.PermissionVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,5 +52,20 @@ public class PermissionService {
 
     public void updateAvailable(String id, String available) {
         pm.updateAvailable(id,available);
+    }
+
+    public List<RolePermission> getRolePermissionByPermissionId(String id) {
+        return pm.getRolePermissionByPermissionId(id);
+    }
+
+    public List<RolePermission> getBatchRolePermissionByPermissionId(String ids) {
+        String[] idArr = ids.split(",");
+        for(String id : idArr) {
+            List<RolePermission> list = getRolePermissionByPermissionId(id);
+            if(list != null || list.size() > 0) {
+                return list;
+            }
+        }
+        return null;
     }
 }
