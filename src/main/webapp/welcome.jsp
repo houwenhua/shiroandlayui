@@ -12,6 +12,13 @@
     <link rel="stylesheet" href="./frame/layui/css/layui.css">
     <link rel="stylesheet" href="./frame/static/css/style.css">
     <link rel="icon" href="./frame/static/image/code.png">
+    <style>
+        .layui-colla-content{
+            border:1px solid #e2e2e2;
+            margin-top:10px;
+            /*padding-top:0px;*/
+        }
+    </style>
 </head>
 <body>
 <div class="layui-fluid">
@@ -20,12 +27,27 @@
             <div class="layui-row layui-col-space15">
                 <div class="layui-col-md12">
                     <div class="layui-card">
-                        <div class="layui-card-header">今日访问</div>
+                        <div class="layui-card-header">天气预报</div>
                         <div class="layui-card-body">
-                            <div class="layui-colla-content layui-show" style="border-top: 1px solid #e2e2e2;">
+                            <div class="layui-colla-content layui-show">
                                 <div id="main" style="height: 450px;"></div>
                             </div>
                         </div>
+                    </div>
+                </div>
+                <div class="layui-col-md12">
+                    <div class="layui-card">
+                        <div class="layui-colla-content layui-show">
+                            <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+                                <legend>成都今日温度变化</legend>
+                            </fieldset>
+                            <ul class="layui-timeline" id="weather">
+                            </ul>
+                        </div>
+                        <%--<div class="layui-card-header">今日天气</div>
+                        <div class="layui-card-body">
+
+                        </div>--%>
                     </div>
                 </div>
             </div>
@@ -63,96 +85,117 @@
             , element = layui.element
             , $ = layui.jquery;
 
+
         var myChart = echarts.init(document.getElementById('main'));
-
-
         // 指定图表的配置项和数据
-        var base = +new Date(2014, 9, 3, 0);
-        var oneDay = 600000;
-        var date = [];
-        var data = [];
-        for (var i = 0; i < 144; i++) {
-            var now = new Date(base += oneDay);
-            date.push([now.getHours(), now.getMinutes()].join(':'));
-            data.push(Math.floor(Math.random() * (1000 + 1 - 400) + 400));
-        }
-        date.unshift(0.0);
-        data.unshift(500);
-        option = {
-            title : {
-                text: '未来一周气温变化',
-                subtext: '纯属虚构'
+        var dateNew = [];
+        var tem1 = [];
+        var tem2 = [];
+        $.ajax({
+            type: 'GET',
+            url: 'https://www.tianqiapi.com/api/',
+            data: 'version=v1&city=成都',
+            dataType: 'JSON',
+            error: function () {
+                alert('网络错误');
             },
-            tooltip : {
-                trigger: 'axis'
-            },
-            legend: {
-                data:['最高气温','最低气温']
-            },
-            toolbox: {
-                show : true,
-                feature : {
-                    mark : {show: true},
-                    dataView : {show: true, readOnly: false},
-                    magicType : {show: true, type: ['line', 'bar']},
-                    restore : {show: true},
-                    saveAsImage : {show: true}
+            success: function (res) {
+                //var data = "";
+                //循环获得横坐标
+                for(var i = 0; i < res.data.length; i++) {
+                    //data = data + "," + "'" + res.data[i].day + "'";
+                    //dateNew.push(res.data[i].day);
+                    dateNew[i] = res.data[i].day;
+                    //获得最高温度
+                    tem1.push(parseInt(res.data[i].tem1.substr(0,res.data[i].tem1.length - 1)));
+                    //获得最低温度
+                    tem2.push(parseInt(res.data[i].tem2.substr(0,res.data[i].tem2.length - 1)));
                 }
-            },
-            calculable : true,
-            xAxis : [
-                {
-                    type : 'category',
-                    boundaryGap : false,
-                    data : ['周一','周二','周三','周四','周五','周六','周日']
-                }
-            ],
-            yAxis : [
-                {
-                    type : 'value',
-                    axisLabel : {
-                        formatter: '{value} °C'
-                    }
-                }
-            ],
-            series : [
-                {
-                    name:'最高气温',
-                    type:'line',
-                    data:[11, 11, 15, 13, 12, 13, 10],
-                    markPoint : {
-                        data : [
-                            {type : 'max', name: '最大值'},
-                            {type : 'min', name: '最小值'}
-                        ]
+
+                option = {
+                    title : {
+                        text: '未来七天成都气温变化',
+                        subtext: '来自TianQiAPI.COM'
                     },
-                    markLine : {
-                        data : [
-                            {type : 'average', name: '平均值'}
-                        ]
-                    }
-                },
-                {
-                    name:'最低气温',
-                    type:'line',
-                    data:[1, -2, 2, 5, 3, 2, 0],
-                    markPoint : {
-                        data : [
-                            {name : '周最低', value : -2, xAxis: 1, yAxis: -1.5}
-                        ]
+                    tooltip : {
+                        trigger: 'axis'
                     },
-                    markLine : {
-                        data : [
-                            {type : 'average', name : '平均值'}
-                        ]
-                    }
+                    legend: {
+                        data:['最高气温','最低气温']
+                    },
+                    toolbox: {
+                        show : true,
+                        feature : {
+                            mark : {show: true},
+                            dataView : {show: true, readOnly: false},
+                            magicType : {show: true, type: ['line', 'bar']},
+                            restore : {show: true},
+                            saveAsImage : {show: true}
+                        }
+                    },
+                    calculable : true,
+                    xAxis : [
+                        {
+                            type : 'category',
+                            boundaryGap : false,
+                            data : dateNew
+                        }
+                    ],
+                    yAxis : [
+                        {
+                            type : 'value',
+                            axisLabel : {
+                                formatter: '{value} °C'
+                            }
+                        }
+                    ],
+                    series : [
+                        {
+                            name:'最高气温',
+                            type:'line',
+                            data:tem1,//[11, 11, 15, 13, 12, 13, 10],
+                            markPoint : {
+                                data : [
+                                    {type : 'max', name: '最大值'},
+                                    {type : 'min', name: '最小值'}
+                                ]
+                            },
+                            markLine : {
+                                data : [
+                                    {type : 'average', name: '平均值'}
+                                ]
+                            }
+                        },
+                        {
+                            name:'最低气温',
+                            type:'line',
+                            data:tem2,
+                            markPoint : {
+                                data : [
+                                    {name : '周最低', value : -2, xAxis: 1, yAxis: -1.5}
+                                ]
+                            },
+                            markLine : {
+                                data : [
+                                    {type : 'average', name : '平均值'}
+                                ]
+                            }
+                        }
+                    ]
+                };
+                // 使用刚指定的配置项和数据显示图表。
+                myChart.setOption(option);
+
+                $("legend").text("今日"+res.city + " : " + res.data[0].wea);
+                // 遍历数组
+                for (var i = 0; i < res.data[0].hours.length; i++) {
+                    $('#weather').append('<li class="layui-timeline-item"><i class="layui-icon layui-timeline-axis"></i><div class="layui-timeline-content layui-text"><div class="layui-timeline-title">'+ res.data[0].hours[i].day + ' : '+ res.data[0].hours[i].tem+'</div> </div></li>');
                 }
-            ]
-        };
+            }
+        });
 
 
-        // 使用刚指定的配置项和数据显示图表。
-        myChart.setOption(option);
+
     });
 </script>
 <script>
