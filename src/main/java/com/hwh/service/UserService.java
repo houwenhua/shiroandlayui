@@ -6,6 +6,7 @@ import com.hwh.vo.DataTable;
 import com.hwh.vo.UserVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.List;
  * @author hwh
  * @create 2018/10/11 13:42
  */
+@Transactional
 @Service
 public class UserService {
 
@@ -78,7 +80,7 @@ public class UserService {
         return dataTable;
     }
 
-    public String addUser(UserVo user) {
+    public String addUser(UserVo user) throws Exception{
         //用户的id和usercode是相同的，而且usercode是不允许重复的
         List<User> list = um.getAllUsers();
         for(User user1 : list) {
@@ -99,7 +101,7 @@ public class UserService {
     }
 
     //删除用户
-    public void deleteUser(String id) {
+    public void deleteUser(String id) throws Exception {
         um.deleteUserById(id);
         um.deleteUserRoleByUserId(id);
     }
@@ -108,7 +110,7 @@ public class UserService {
      * 批量删除用户和对应的角色信息
      * @param ids
      */
-    public void deleteBatchUser(String ids) {
+    public void deleteBatchUser(String ids)throws Exception {
         String[] idArr = ids.split(",");
         for(int i = 0; i < idArr.length; i++) {
             deleteUser(idArr[i]);
@@ -128,7 +130,7 @@ public class UserService {
      * @param id
      * @param urList
      */
-    public void addUserRoles(String id, List<String> urList) {
+    public void addUserRoles(String id, List<String> urList)throws Exception {
         for(String role: urList) {
             um.addUserRoles(id,role);
         }
@@ -139,7 +141,7 @@ public class UserService {
      * @param id
      * @param roleids
      */
-    public void deleteUserRoles(String id, List<String> roleids) {
+    public void deleteUserRoles(String id, List<String> roleids) throws Exception{
         String ids = "";
         for(String role : roleids) {
             ids = ids + "," + role;
@@ -157,14 +159,14 @@ public class UserService {
      * @param user
      * @return
      */
-    public String updateUser(UserVo user) {
+    public String updateUser(UserVo user) throws Exception {
         User u = new User(user.getUsername(),user.getPassword(),user.getSalt(),user.getLocked());
         u.setId(user.getId());
         Integer flag = um.updateUser(u);
         return flag.toString();
     }
 
-    public void updateLocked(String id, String locked) {
+    public void updateLocked(String id, String locked) throws Exception {
         um.updateLocked(id,locked);
     }
 }

@@ -48,6 +48,8 @@
 
 <script type="text/javascript" src="../../frame/layui3/layui.js"></script>
 <script type="text/javascript" src="../../js/index.js"></script>
+<script type="text/javascript" src="../../js/vue.js"></script>
+<script type="text/javascript" src="../../js/vue-resource.js"></script>
 <script type="text/javascript">
     // layui方法
     layui.use(['table', 'form', 'layer'], function () {
@@ -89,10 +91,10 @@
                             return false;
                         });
                         //禁止admin角色的操作
-                        /*$("#detail").addClass("layui-btn-disabled");
+                        $("#detail").addClass("layui-btn-disabled");
                         $("#detail").click(function () {
                             return false;
-                        });*/
+                        });
                     }
                 }
 
@@ -110,8 +112,12 @@
                     locked:this.checked ? '1' : '0'
                 },
                 success:function(data) {
-                    if(data === "1") {
+                    if(data.resultCode === 1) {
                         layer.msg("修改成功", {icon: 6});
+                    }else if(data.resultCode === 2){
+                        layer.msg(data.resultMsg, {icon: 5});
+                    } else if(data.resultCode === 444){
+                        layer.msg("没有操作权限", {icon: 5});
                     }
                 }
             })
@@ -170,23 +176,33 @@
                     layer.msg('系统管理员不能删除！！！',{icon: 5});
                 } else {
                 layer.confirm('真的删除该行么',{icon: 5}, function(index){
+                    /*Vue.resource("/userController/delete.action",{id:'zhangsan'}).query().then((response) => {
+                        alert(1);
+                        console.log(response);
+                    }).catch (function (error) {
+                        alert(error.data.errMsg);
+                        layer.msg(error.data.errMsg ,{icon: 5});
+                        console.log(error);
+                    })*/
                     $.ajax({
                         url: "/userController/delete.action",
-                        type: "POST",
+                        type: "post",
                         data:{
                             "id":data.id,
-                            "usercode":data.usercode
+                            //"usercode":data.usercode
                         },
                         dataType: "json",
                         success: function(data){
-                            if(data === "444"){
+                            if(data.resultCode === 444){
                                 layer.msg("没有操作权限", {icon: 5});
-                            }else if(data == '1'){
+                            }else if(data.resultCode === 1){
                                 //删除这一行
                                 obj.del();
                                 //关闭弹框
                                 layer.close(index);
                                 layer.msg("删除成功", {icon: 6});
+                            }else if(data.resultCode === 2){
+                                layer.msg(data.resultMsg, {icon: 5});
                             }else{
                                 layer.msg("删除失败", {icon: 5});
                             }
@@ -280,13 +296,15 @@
                         },
                         dataType: "json",
                         success: function(data){
-                            if(data === "444"){
+                            if(data.resultCode === 444){
                                 layer.msg("没有操作权限", {icon: 5});
-                            }else if(data == '1'){
+                            }else if(data.resultCode === 1){
                                 tableIns.reload();
                                 //关闭弹框
                                 layer.close(index);
                                 layer.msg("删除成功", {icon: 6});
+                            }else if(data.resultCode === 2){
+                                layer.msg(data.resultMsg, {icon: 5});
                             }else{
                                 layer.msg("删除失败", {icon: 5});
                             }

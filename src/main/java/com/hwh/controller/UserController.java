@@ -1,27 +1,22 @@
 package com.hwh.controller;
 
-import com.hwh.po.Role;
-import com.hwh.po.User;
+import com.hwh.enums.ResultMessage;
+import com.hwh.enums.ResultStatus;
 import com.hwh.service.RoleService;
 import com.hwh.service.UserService;
 import com.hwh.vo.DataTable;
 import com.hwh.vo.RoleVo;
 import com.hwh.vo.SelectVo;
 import com.hwh.vo.UserVo;
-import org.apache.shiro.authz.UnauthorizedException;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author hwh
@@ -50,43 +45,67 @@ public class UserController {
     @RequiresRoles("用户管理员")
     @RequestMapping(value = "/delete",method = RequestMethod.POST,produces = "application/json;charset=utf-8")
     @ResponseBody
-    public String delete(String id,String usercode) {
+    public ResultMessage delete(String id, String usercode) {
         System.out.println("执行删除方法******");
-        us.deleteUser(id);
-        return "1";
+        try {
+            us.deleteUser(id);
+        } catch (Exception e) {
+            return new ResultMessage(ResultStatus.BAD_REQUEST,"异常："+e.getMessage());
+        }
+        return new ResultMessage(ResultStatus.OK,"删除成功");
     }
 
     @RequiresRoles("用户管理员")
     @RequestMapping(value = "/batchDelete",method = RequestMethod.POST,produces = "application/json;charset=utf-8")
     @ResponseBody
-    public String batchDelete(String ids) {
+    public ResultMessage batchDelete(String ids) {
         System.out.println("执行删除方法******"+ids);
-        us.deleteBatchUser(ids);
-        return "1";
+        try {
+            us.deleteBatchUser(ids);
+        } catch (Exception e) {
+            return new ResultMessage(ResultStatus.BAD_REQUEST,"异常："+e.getMessage());
+        }
+        return new ResultMessage(ResultStatus.OK,"删除成功");
     }
 
     @RequiresRoles("用户管理员")
     @RequestMapping(value = "/add",method = RequestMethod.POST,produces = "application/json;charset=utf-8")
     @ResponseBody
-    public String add(UserVo user) {
-        String flag = us.addUser(user);
-        return flag;
+    public ResultMessage add(UserVo user) {
+        String flag = null;
+        try {
+            flag = us.addUser(user);
+        } catch (Exception e) {
+            return new ResultMessage(ResultStatus.BAD_REQUEST,"异常："+e.getMessage());
+        }
+        if(flag.equals("5")) {
+            return new ResultMessage(ResultStatus.EXIST_USER,"增加失败，用户已经存在");
+        }
+        return new ResultMessage(ResultStatus.OK,"增加成功");
     }
 
     @RequiresRoles("用户管理员")
     @RequestMapping(value = "/update",method = RequestMethod.POST,produces = "application/json;charset=utf-8")
     @ResponseBody
-    public String update(UserVo user) {
-        String flag = us.updateUser(user);
-        return "1";
+    public ResultMessage update(UserVo user) {
+        try {
+            String flag = us.updateUser(user);
+        } catch (Exception e) {
+            return new ResultMessage(ResultStatus.BAD_REQUEST,"异常："+e.getMessage());
+        }
+        return new ResultMessage(ResultStatus.OK,"修改成功");
     }
 
     @RequiresRoles("用户管理员")
     @RequestMapping(value = "/updateLocked",method = RequestMethod.POST,produces = "application/json;charset=utf-8")
     @ResponseBody
-    public String updateLocked(String id,String locked) {
-        us.updateLocked(id,locked);
-        return "1";
+    public ResultMessage updateLocked(String id,String locked) {
+        try {
+            us.updateLocked(id,locked);
+        } catch (Exception e) {
+            return new ResultMessage(ResultStatus.BAD_REQUEST,"异常："+e.getMessage());
+        }
+        return new ResultMessage(ResultStatus.OK,"修改成功");
     }
 
 
@@ -124,8 +143,9 @@ public class UserController {
     @RequiresRoles("用户管理员")
     @RequestMapping(value = "/addUserRoles",method = RequestMethod.POST,produces = "application/json;charset=utf-8")
     @ResponseBody
-    public String addUserRoles(String id,String userrole) {
+    public ResultMessage addUserRoles(String id,String userrole) {
         System.out.println(id + ":" + userrole);
+        try {
         //获得用户已经具有的角色
         List<String> roleids = findUserAllRole(id);
 
@@ -156,6 +176,9 @@ public class UserController {
         us.addUserRoles(id,newList);
         //实现删除
         us.deleteUserRoles(id,roleids);
-        return "1";
+        } catch (Exception e) {
+            return new ResultMessage(ResultStatus.BAD_REQUEST,"异常："+e.getMessage());
+        }
+        return new ResultMessage(ResultStatus.OK,"修改成功");
     }
 }

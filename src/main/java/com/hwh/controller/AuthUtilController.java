@@ -1,5 +1,7 @@
 package com.hwh.controller;
 
+import com.hwh.enums.ResultMessage;
+import com.hwh.enums.ResultStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,9 +28,9 @@ public class AuthUtilController {
      */
     @RequestMapping(value = "/noAuthorizedException",method = RequestMethod.POST,produces = "application/json;charset=utf-8")
     @ResponseBody
-    public String noAuthorizedException(){
+    public ResultMessage noAuthorizedException(){
         System.out.println("没有授权跳转到，用于注解权限没有权限时跳转********");
-        return noAuth;
+        return new ResultMessage(ResultStatus.NO_AUTH,"没有操作权限");
     }
 
     /**
@@ -37,9 +39,9 @@ public class AuthUtilController {
      */
     @RequestMapping(value = "/noAuthorizedException1",method = RequestMethod.GET,produces = "application/json;charset=utf-8")
     @ResponseBody
-    public String noAuthorizedException1(){
+    public ResultMessage noAuthorizedException1(){
         System.out.println("没有授权跳转到，用于配置文件没有权限时，跳转********");
-        return noAuth;
+        return new ResultMessage(ResultStatus.NO_AUTH,"没有操作权限");
     }
 
     /**
