@@ -120,15 +120,20 @@
                     //available:$.trim((data.field.available)==="on"?1:0)
                 },
                 success:function (data) {
-                    if(data === "444"){
+                    if(data.resultCode === 444){
                         layer.msg("没有操作权限", {icon: 5});
-                    }else if(data === "1") {
+                    }else if(data.resultCode === 1) {
                         //假设这是iframe页
                         var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
                         parent.layer.close(index); //再执行关闭
-                        parent.layer.msg("添加成功", {icon: 6});
+                        parent.layer.msg("修改成功", {icon: 6});
+                    }else if(data.resultCode === 2){
+                        layer.open({
+                            title: '异常'
+                            ,content: data.resultMsg
+                        });
                     } else {
-                        layer.msg("添加失败", {icon: 6});
+                        layer.msg("修改失败", {icon: 6});
                     }
                 }
             });

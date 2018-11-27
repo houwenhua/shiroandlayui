@@ -8,6 +8,7 @@ import com.hwh.vo.DataTable;
 import com.hwh.vo.PermissionVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -18,6 +19,7 @@ import java.util.List;
  * @Date 2018/11/8 20:42
  */
 @Service
+@Transactional
 public class PermissionService {
 
     @Autowired
@@ -31,7 +33,7 @@ public class PermissionService {
         return dataTable;
     }
 
-    public void addPermission(PermissionVo pv) {
+    public void addPermission(PermissionVo pv)throws Exception {
         Permission p = new Permission(pv.getName(),pv.getType(),pv.getUrl(),pv.getPercode(),pv.getParentid(),pv.getParentids(),pv.getSortstring(),pv.getAvailable());
         pm.addPermission(p);
     }
@@ -40,25 +42,25 @@ public class PermissionService {
         pm.deletePermission(id);
     }
 
-    public void update(PermissionVo pv) {
+    public void update(PermissionVo pv) throws Exception{
         Permission p = new Permission(pv.getName(),pv.getType(),pv.getUrl(),pv.getPercode(),pv.getParentid(),pv.getParentids(),pv.getSortstring(),pv.getAvailable());
         p.setId(pv.getId());
         pm.update(p);
     }
 
-    public void batchDelete(String ids) {
+    public void batchDelete(String ids) throws Exception{
         pm.batchDelete(ids);
     }
 
-    public void updateAvailable(String id, String available) {
+    public void updateAvailable(String id, String available) throws Exception{
         pm.updateAvailable(id,available);
     }
 
-    public List<RolePermission> getRolePermissionByPermissionId(String id) {
+    public List<RolePermission> getRolePermissionByPermissionId(String id) throws Exception{
         return pm.getRolePermissionByPermissionId(id);
     }
 
-    public List<RolePermission> getBatchRolePermissionByPermissionId(String ids) {
+    public List<RolePermission> getBatchRolePermissionByPermissionId(String ids) throws Exception{
         String[] idArr = ids.split(",");
         for(String id : idArr) {
             List<RolePermission> list = getRolePermissionByPermissionId(id);

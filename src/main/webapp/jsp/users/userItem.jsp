@@ -115,7 +115,11 @@
                     if(data.resultCode === 1) {
                         layer.msg("修改成功", {icon: 6});
                     }else if(data.resultCode === 2){
-                        layer.msg(data.resultMsg, {icon: 5});
+                        layer.open({
+                            title: '异常'
+                            ,content: data.resultMsg
+                        });
+                        //layer.msg(data.resultMsg, {icon: 5});
                     } else if(data.resultCode === 444){
                         layer.msg("没有操作权限", {icon: 5});
                     }
@@ -202,7 +206,10 @@
                                 layer.close(index);
                                 layer.msg("删除成功", {icon: 6});
                             }else if(data.resultCode === 2){
-                                layer.msg(data.resultMsg, {icon: 5});
+                                layer.open({
+                                    title: '异常'
+                                    ,content: data.resultMsg
+                                });
                             }else{
                                 layer.msg("删除失败", {icon: 5});
                             }
@@ -304,7 +311,10 @@
                                 layer.close(index);
                                 layer.msg("删除成功", {icon: 6});
                             }else if(data.resultCode === 2){
-                                layer.msg(data.resultMsg, {icon: 5});
+                                layer.open({
+                                    title: '异常'
+                                    ,content: data.resultMsg
+                                });
                             }else{
                                 layer.msg("删除失败", {icon: 5});
                             }

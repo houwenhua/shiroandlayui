@@ -1,5 +1,7 @@
 package com.hwh.controller;
 
+import com.hwh.enums.ResultMessage;
+import com.hwh.enums.ResultStatus;
 import com.hwh.po.UserRole;
 import com.hwh.service.RoleService;
 import com.hwh.vo.DataTable;
@@ -39,64 +41,84 @@ public class RoleController {
     @RequiresRoles("用户管理员")
     @RequestMapping(value = "/add",method = RequestMethod.POST,produces = "application/json;charset=utf-8")
     @ResponseBody
-    public String add(RoleVo rv) {
-        rs.addRole(rv);
-        return "1";
+    public ResultMessage add(RoleVo rv) {
+        try {
+            rs.addRole(rv);
+        } catch (Exception e) {
+            return new ResultMessage(ResultStatus.BAD_REQUEST,"异常：" + e.getMessage());
+        }
+        return new ResultMessage(ResultStatus.OK,"增加成功");
     }
 
     @RequiresRoles("用户管理员")
     @RequestMapping(value = "/delete",method = RequestMethod.POST,produces = "application/json;charset=utf-8")
     @ResponseBody
-    public String delete(String id) {
-        List<UserRole> ur = rs.getUserRoleByRoleId(id);
-        //如果没有用户使用该角色，就可以删除
-        if(ur == null || ur.size() <= 0) {
-            rs.deleteRole(id);
-        } else {
-            return "555";
+    public ResultMessage delete(String id) {
+        try {
+            List<UserRole> ur = rs.getUserRoleByRoleId(id);
+            //如果没有用户使用该角色，就可以删除
+            if(ur == null || ur.size() <= 0) {
+                rs.deleteRole(id);
+            } else {
+                return new ResultMessage(ResultStatus.EXIST_USED_ROLE,"删除失败");
+            }
+        } catch (Exception e) {
+            return new ResultMessage(ResultStatus.BAD_REQUEST,"异常：" + e.getMessage());
         }
-        return "1";
+        return new ResultMessage(ResultStatus.OK,"删除成功");
     }
 
     @RequiresRoles("用户管理员")
     @RequestMapping(value = "/update",method = RequestMethod.POST,produces = "application/json;charset=utf-8")
     @ResponseBody
-    public String update(RoleVo rv) {
-        rs.update(rv);
-        return "1";
+    public ResultMessage update(RoleVo rv) {
+        try {
+            rs.update(rv);
+        } catch (Exception e) {
+            return new ResultMessage(ResultStatus.BAD_REQUEST,"异常：" + e.getMessage());
+        }
+        return new ResultMessage(ResultStatus.OK,"修改成功");
     }
 
     @RequiresRoles("用户管理员")
     @RequestMapping(value = "/updateAvailable",method = RequestMethod.POST,produces = "application/json;charset=utf-8")
     @ResponseBody
-    public String updateAvailable(String id,String available) {
+    public ResultMessage updateAvailable(String id,String available){
         List<UserRole> ur = rs.getUserRoleByRoleId(id);
-        //如果没有用户使用该角色，就可以删除
-        if(ur == null || ur.size() <= 0) {
+        try {
+            //如果没有用户使用该角色，就可以修改
+            if(ur == null || ur.size() <= 0) {
 
-        } else {
-            return "555";
+            } else {
+                return new ResultMessage(ResultStatus.EXIST_USED_ROLE,"删除失败");
+            }
+            rs.updateAvailable(id,available);
+        } catch (Exception e) {
+            return new ResultMessage(ResultStatus.BAD_REQUEST,"异常：" + e.getMessage());
         }
-        rs.updateAvailable(id,available);
-        return "1";
+        return new ResultMessage(ResultStatus.OK,"修改成功");
     }
 
     @RequiresRoles("用户管理员")
     @RequestMapping(value = "/batchDelete",method = RequestMethod.POST,produces = "application/json;charset=utf-8")
     @ResponseBody
-    public String batchDelete(String ids) {
-        String[] idArr = ids.split(",");
-        //获得所有的用户角色
-        for(String id : idArr) {
-            List<UserRole> ur = rs.getUserRoleByRoleId(id);
-            if(ur == null || ur.size() <= 0) {
-                rs.deleteRole(id);
-            } else {
-                return "555";
+    public ResultMessage batchDelete(String ids) {
+        try {
+            String[] idArr = ids.split(",");
+            //获得所有的用户角色
+            for(String id : idArr) {
+                List<UserRole> ur = rs.getUserRoleByRoleId(id);
+                if(ur == null || ur.size() <= 0) {
+                    rs.deleteRole(id);
+                } else {
+                    return new ResultMessage(ResultStatus.EXIST_USED_ROLE,"删除失败");
+                }
             }
+        } catch (Exception e) {
+            return new ResultMessage(ResultStatus.BAD_REQUEST,"异常：" + e.getMessage());
         }
         //rs.batchDelete(ids);
-        return "1";
+        return new ResultMessage(ResultStatus.OK,"删除成功");
     }
 
     @RequiresRoles("用户管理员")
@@ -111,8 +133,12 @@ public class RoleController {
     @RequiresRoles("用户管理员")
     @RequestMapping(value = "/addRolePermission",method = RequestMethod.POST,produces = "application/json;charset=utf-8")
     @ResponseBody
-    public String addRolePermission(String roleid,String ids) {
-        rs.addRolePermission(roleid,ids);
-        return "1";
+    public ResultMessage addRolePermission(String roleid,String ids) {
+        try {
+            rs.addRolePermission(roleid,ids);
+        } catch (Exception e) {
+            return new ResultMessage(ResultStatus.BAD_REQUEST,"异常：" + e.getMessage());
+        }
+        return new ResultMessage(ResultStatus.OK,"操作成功");
     }
 }

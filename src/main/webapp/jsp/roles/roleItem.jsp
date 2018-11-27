@@ -162,16 +162,21 @@
                             },
                             dataType: "json",
                             success: function(data){
-                                if(data === "444"){
+                                if(data.resultCode === 444){
                                     layer.msg("没有操作权限", {icon: 5});
-                                }else if(data == '1'){
+                                }else if(data.resultCode === 1){
                                     //删除这一行
                                     obj.del();
                                     //关闭弹框
                                     layer.close(index);
                                     layer.msg("删除成功", {icon: 6});
-                                }else if(data == '555'){
+                                }else if(data.resultCode === 555){
                                     layer.msg("该角色已经被使用，不能删除", {icon: 5});
+                                }else if(data.resultCode === 2){
+                                    layer.open({
+                                        title: '异常'
+                                        ,content: data.resultMsg
+                                    });
                                 }else{
                                     layer.msg("删除失败", {icon: 5});
                                 }
@@ -228,9 +233,11 @@
                     available:this.checked ? '1' : '0'
                 },
                 success:function(data) {
-                    if(data === "1") {
+                    if(data.resultCode === 444){
+                        layer.msg("没有操作权限", {icon: 5});
+                    }else if(data.resultCode === 1) {
                         layer.msg("修改成功", {icon: 6});
-                    }else if(data == '555'){
+                    }else if(data.resultCode === 555){
 
                         var switchIfNull=$(parentTr).find("td:eq(3)").find("div:eq(1)");
                         // 修改div的样式为F的样式,F的值
@@ -238,6 +245,11 @@
                         switchIfNull.find("em").text("开");
 
                         layer.msg("该角色已经被使用，不能被关闭！！！", {icon: 5});
+                    }else if(data.resultCode === 2){
+                        layer.open({
+                            title: '异常'
+                            ,content: data.resultMsg
+                        });
                     }
                 }
             })
@@ -298,15 +310,20 @@
                         },
                         dataType: "json",
                         success: function(data){
-                            if(data === "444"){
+                            if(data.resultCode === 444){
                                 layer.msg("没有操作权限", {icon: 5});
-                            }else if(data == '1'){
+                            }else if(data.resultCode === 1){
                                 tableIns.reload();
                                 //关闭弹框
                                 layer.close(index);
                                 layer.msg("删除成功", {icon: 6});
-                            }else if(data == '555'){
+                            }else if(data.resultCode === 555){
                                 layer.msg("该角色已经被使用，不能删除", {icon: 5});
+                            }else if(data.resultCode === 2){
+                                layer.open({
+                                    title: '异常'
+                                    ,content: data.resultMsg
+                                });
                             }else{
                                 layer.msg("删除失败", {icon: 5});
                             }

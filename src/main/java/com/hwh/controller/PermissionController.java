@@ -1,5 +1,7 @@
 package com.hwh.controller;
 
+import com.hwh.enums.ResultMessage;
+import com.hwh.enums.ResultStatus;
 import com.hwh.po.Permission;
 import com.hwh.po.RolePermission;
 import com.hwh.service.PermissionService;
@@ -35,47 +37,67 @@ public class PermissionController {
 
     @RequestMapping(value = "/add",method = RequestMethod.POST,produces = "application/json;charset=utf-8")
     @ResponseBody
-    public String add(PermissionVo pv){
-        ps.addPermission(pv);
-        return "1";
+    public ResultMessage add(PermissionVo pv){
+        try {
+            ps.addPermission(pv);
+        } catch (Exception e) {
+            return new ResultMessage(ResultStatus.BAD_REQUEST,"异常：" + e.getMessage());
+        }
+        return new ResultMessage(ResultStatus.OK,"增加成功");
     }
 
     @RequestMapping(value = "/delete",method = RequestMethod.POST,produces = "application/json;charset=utf-8")
     @ResponseBody
-    public String delete(String id) {
-        //如果有角色使用就不能删除，获得是否有角色使用
-        List<RolePermission> list = ps.getRolePermissionByPermissionId(id);
-        if(list != null && list.size() > 0) {
-            //有角色使用不能删除
-            return "555";
+    public ResultMessage delete(String id) {
+        try{
+            //如果有角色使用就不能删除，获得是否有角色使用
+            List<RolePermission> list = ps.getRolePermissionByPermissionId(id);
+            if(list != null && list.size() > 0) {
+                //有角色使用不能删除
+                return new ResultMessage(ResultStatus.EXIST_USED_ROLE,"删除失败");
+            }
+            ps.deletePermission(id);
+        }catch (Exception e) {
+            return new ResultMessage(ResultStatus.BAD_REQUEST,"异常：" + e.getMessage());
         }
-        ps.deletePermission(id);
-        return "1";
+        return new ResultMessage(ResultStatus.OK,"删除成功");
     }
 
     @RequestMapping(value = "/update",method = RequestMethod.POST,produces = "application/json;charset=utf-8")
     @ResponseBody
-    public String update(PermissionVo pv) {
-        ps.update(pv);
-        return "1";
+    public ResultMessage update(PermissionVo pv) {
+        try {
+            ps.update(pv);
+        } catch (Exception e) {
+            return new ResultMessage(ResultStatus.BAD_REQUEST,"异常：" + e.getMessage());
+        }
+        return new ResultMessage(ResultStatus.OK,"修改成功");
     }
 
     @RequestMapping(value = "/updateAvailable",method = RequestMethod.POST,produces = "application/json;charset=utf-8")
     @ResponseBody
-    public String updateAvailable(String id,String available) {
-        ps.updateAvailable(id,available);
-        return "1";
+    public ResultMessage updateAvailable(String id,String available) {
+        try {
+            ps.updateAvailable(id,available);
+        } catch (Exception e) {
+            return new ResultMessage(ResultStatus.BAD_REQUEST,"异常：" + e.getMessage());
+        }
+        return new ResultMessage(ResultStatus.OK,"修改成功");
     }
 
     @RequestMapping(value = "/batchDelete",method = RequestMethod.POST,produces = "application/json;charset=utf-8")
     @ResponseBody
-    public String batchDelete(String ids) {
-        List<RolePermission> list = ps.getBatchRolePermissionByPermissionId(ids);
-        if(list != null && list.size() > 0) {
-            //有角色使用不能删除
-            return "555";
+    public ResultMessage batchDelete(String ids) {
+        try{
+            List<RolePermission> list = ps.getBatchRolePermissionByPermissionId(ids);
+            if(list != null && list.size() > 0) {
+                //有角色使用不能删除
+                return new ResultMessage(ResultStatus.EXIST_USED_ROLE,"删除失败");
+            }
+            ps.batchDelete(ids);
+        }catch (Exception e) {
+            return new ResultMessage(ResultStatus.BAD_REQUEST,"异常：" + e.getMessage());
         }
-        ps.batchDelete(ids);
-        return "1";
+        return new ResultMessage(ResultStatus.OK,"删除成功");
     }
 }

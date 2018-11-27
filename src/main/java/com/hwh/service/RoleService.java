@@ -11,6 +11,7 @@ import com.hwh.vo.PermissionMenuVo;
 import com.hwh.vo.RoleVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +21,7 @@ import java.util.List;
  * @create 2018/10/12 13:26
  */
 @Service
+@Transactional
 public class RoleService {
 
     @Autowired
@@ -59,14 +61,14 @@ public class RoleService {
         return  strList;
     }
 
-    public void addRole(RoleVo rv) {
+    public void addRole(RoleVo rv) throws Exception{
         Role r = new Role(rv.getId(),rv.getName(),rv.getAvailable());
         rm.addRole(rv.getId(),rv.getName(),rv.getAvailable());
         //默认设置admin管理员拥有所有角色
         //um.addUserRoles("admin",rv.getId().toString());
     }
 
-    public void deleteRole(String id) {
+    public void deleteRole(String id) throws Exception{
         rm.deleteRole(id);
         //删除角色对应的role和资源信息
         rm.deleteRolePermission(id);
@@ -77,7 +79,7 @@ public class RoleService {
         return ur;
     }
 
-    public void update(RoleVo rv) {
+    public void update(RoleVo rv) throws Exception{
         Role r = new Role(rv.getId(),rv.getName(),rv.getAvailable());
         rm.update(r);
     }
@@ -86,7 +88,7 @@ public class RoleService {
      * 批量删除字符串的话必须传入加上单引号的字符串（‘2’，‘1’）
      * @param ids
      */
-    public void batchDelete(String ids) {
+    public void batchDelete(String ids) throws Exception{
         String[] idArr = ids.split(",");
         for(String str : idArr){
             deleteRole(str);
@@ -101,7 +103,7 @@ public class RoleService {
         rm.batchDelete(ids);*/
     }
 
-    public void updateAvailable(String id,String available) {
+    public void updateAvailable(String id,String available)throws Exception {
         rm.updateAvailable(id,available);
     }
 
@@ -138,7 +140,7 @@ public class RoleService {
      * 增加角色的资源
      * @param ids
      */
-    public void addRolePermission(String roleid,String ids) {
+    public void addRolePermission(String roleid,String ids) throws Exception{
         //查询角色具有的资源
         List<Permission> alist = rm.findPermissionByRoleId(roleid);
         //构建角色具有资源的权限集合和一个临时集合temp

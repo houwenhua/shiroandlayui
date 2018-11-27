@@ -125,7 +125,10 @@
                         parent.layer.close(index); //再执行关闭
                         parent.layer.msg("添加成功", {icon: 6});
                     }else if(data.resultCode === 2){
-                        layer.msg(data.resultMsg, {icon: 5});
+                        layer.open({
+                            title: '异常'
+                            ,content: data.resultMsg
+                        });
                     } else {
                         layer.msg("添加失败", {icon: 6});
                     }

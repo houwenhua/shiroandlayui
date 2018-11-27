@@ -15,4 +15,7 @@ public interface ResultStatus {
 
     //用户存在
     final static Integer EXIST_USER = 5;
+
+    //该角色已经被使用，不能删除
+    final static Integer EXIST_USED_ROLE = 555;
 }
