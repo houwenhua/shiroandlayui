@@ -87,7 +87,7 @@ public class PermissionController {
 
     @RequestMapping(value = "/batchDelete",method = RequestMethod.POST,produces = "application/json;charset=utf-8")
     @ResponseBody
-    public ResultMessage batchDelete(String ids) {
+    public ResultMessage batchDelete(String ids) throws Exception{
         try{
             List<RolePermission> list = ps.getBatchRolePermissionByPermissionId(ids);
             if(list != null && list.size() > 0) {

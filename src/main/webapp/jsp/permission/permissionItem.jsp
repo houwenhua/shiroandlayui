@@ -97,11 +97,17 @@
             }
         });
 
+
         //监听指定开关
         form.on('switch(switchLocked)', function(data){
             /*layer.msg('开关checked：'+ (this.checked ? 'true' : 'false'), {
                 offset: '6px'
             });*/
+
+            // 获取当前控件
+            var selectIfKey=data.othis;
+            // 获取当前所在行
+            var parentTr = selectIfKey.parents("tr");
             layer.tips('温馨提示：状态为'+ (this.checked ? 'true' : 'false'), data.othis);
             $.ajax({
                 url:'/permissionController/updateAvailable.action',
@@ -116,6 +122,14 @@
                     }else if(data.resultCode === 444){
                         layer.msg("没有操作权限", {icon: 5});
                     }else if(data.resultCode === 2){
+                        var switchIfNull=$(parentTr).find("td:eq(9)").find("div:eq(1)");
+                        //alert(switchIfNull.find("em").text());
+                        if(switchIfNull.find("em").text() === '关') {
+                            // 修改div的样式为F的样式,F的值
+                            switchIfNull.prop("class","layui-unselect layui-form-switch layui-form-onswitch");//F的样式
+                            switchIfNull.find("em").text("开");
+                        }
+
                         layer.open({
                             title: '异常'
                             ,content: data.resultMsg

@@ -5,6 +5,7 @@ import com.hwh.po.RolePermission;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -27,7 +28,7 @@ public interface PermissionMapper {
 
     void update(Permission p);
 
-    void batchDelete(@Param("ids") String ids);
+    void batchDelete(@Param("ids")ArrayList list);
 
     void updateAvailable(@Param("id")String id,@Param("available") String available);
 

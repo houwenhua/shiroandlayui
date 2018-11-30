@@ -62,8 +62,12 @@
         update sys_permission set available = #{available} where id = #{id}
     </update>
 
-    <delete id="batchDelete" parameterType="String">
-        delete from sys_permission where id in (#{ids})
+    <delete id="batchDelete" parameterType="java.util.ArrayList">
+        /*delete from sys_permission where id in (${ids})*/
+        delete from sys_permission where id in
+        <foreach collection="list"  item="item" open="(" separator="," close=")"  >
+            #{item}
+        </foreach>
     </delete>
 
     <select id="getAllPermissions" resultType="com.hwh.po.Permission">

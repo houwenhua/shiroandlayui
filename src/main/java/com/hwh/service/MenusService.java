@@ -71,7 +71,7 @@ public class MenusService {
     }
 
     /**
-     * 加载菜单方法，实现根据用户查找菜单
+     * 加载菜单方法，实现根据用户查找菜单,（父id串判断几级菜单，父id判断这菜单是第几级菜单下的）
      * @param usercode
      * @return
      */
