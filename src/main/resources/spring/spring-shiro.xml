@@ -15,7 +15,7 @@
 
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
         <property name="securityManager" ref="securityManager"/>
-        <property name="loginUrl" value="login.jsp" />
+        <property name="loginUrl" value="/login.jsp" />
         <property name="unauthorizedUrl" value="/authUtilController/noAuthorizedException1.action" /><!--方法是get方法-->
         <property name="filterChainDefinitions">
             <value>
