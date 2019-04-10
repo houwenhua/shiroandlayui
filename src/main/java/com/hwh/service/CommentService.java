@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
  * @create 2019/4/10 16:02
  */
 @Service
-public class CommentServer {
+public class CommentService {
 
     @Autowired
     private CommentMapper cm;
