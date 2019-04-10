@@ -4,4 +4,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hwh.mapper.CommentMapper">
 
+    <select id="findAllWtRelease" resultType="com.hwh.po.WtRelease">
+        select * from wt_release
+    </select>
+
 </mapper>
