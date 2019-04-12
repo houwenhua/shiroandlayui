@@ -29,7 +29,7 @@
                 </ul>
                 <div class="layui-form layui-tab-content" id="LAY_ucm" style="padding: 20px 0;">
                     <div class="layui-tab-item layui-show">
-                        <form action="" method="post">
+                        <form onsubmit="return false">
                             <div class="layui-row layui-col-space15 layui-form-item">
                                 <div class="layui-col-md3">
                                     <%--<label class="layui-form-label">所在专栏</label>
@@ -85,7 +85,7 @@
                                     <textarea id="L_content" name="content" required lay-verify="required" placeholder="详细描述" class="layui-textarea fly-editor" style="height: 260px;"></textarea>
                                 </div>
                             </div>
-                            <div class="layui-form-item">
+                            <%--<div class="layui-form-item">
                                 <div class="layui-inline">
                                     <label class="layui-form-label">悬赏飞吻</label>
                                     <div class="layui-input-inline" style="width: 190px;">
@@ -99,8 +99,8 @@
                                     </div>
                                     <div class="layui-form-mid layui-word-aux">发表后无法更改飞吻</div>
                                 </div>
-                            </div>
-                            <div class="layui-form-item">
+                            </div>--%>
+                           <%-- <div class="layui-form-item">
                                 <label for="L_vercode" class="layui-form-label">人类验证</label>
                                 <div class="layui-input-inline">
                                     <input type="text" id="L_vercode" name="vercode" required lay-verify="required" placeholder="请回答后面的问题" autocomplete="off" class="layui-input">
@@ -108,9 +108,9 @@
                                 <div class="layui-form-mid">
                                     <span style="color: #c00;">1+1=?</span>
                                 </div>
-                            </div>
+                            </div>--%>
                             <div class="layui-form-item">
-                                <button class="layui-btn" lay-filter="*" lay-submit>立即发布</button>
+                                <button class="layui-btn"<%-- lay-filter="*" --%>id="addBtn">立即发布</button>
                             </div>
                         </form>
                     </div>
@@ -120,7 +120,7 @@
     </div>
 </div>
 
-
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script src="../../frame/layui3/layui.js"></script>
 <script>
     layui.cache.page = 'jie';
@@ -138,6 +138,35 @@
         fly: 'index'
     }).use('fly');
 </script>
+
+<script>
+    $("#addBtn").click(function () {
+            $.ajax({
+                type:"POST",
+                url:"/commentController/addWtrelease.action",
+                dataType:"json",
+                data:{
+                    title:$.trim($("#L_title").val()),
+                    content:$.trim($("#L_content").val())
+                },
+                success:function (data) {
+                    if(data == "1") {
+                        layui.use(['table', 'form', 'layer'], function () {
+                            var form = layui.form
+                                , table = layui.table
+                                , layer = layui.layer
+                                , $ = layui.jquery;
+
+                            layer.closeAll();
+                            layer.alert('发布成功',{icon: 1, title:'提示'});
+                        });
+                    }
+                }
+            });
+    });
+
+</script>
+
 
 </body>
 </html>

@@ -40,4 +40,6 @@ public interface UserMapper {
     void updateLocked(@Param("id")String id,@Param("locked") String locked);
 
     Long count(@Param("username")String username);
+
+    String getUserNameById(@Param("sysid") String sysid);
 }

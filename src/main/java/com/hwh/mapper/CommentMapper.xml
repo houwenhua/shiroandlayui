@@ -5,7 +5,26 @@
 <mapper namespace="com.hwh.mapper.CommentMapper">
 
     <select id="findAllWtRelease" resultType="com.hwh.po.WtRelease">
-        select * from wt_release
+        select * from wt_release wr order by wr.release_date DESC
     </select>
 
+    <insert id="addWtrelease" parameterType="com.hwh.po.WtRelease">
+        insert into wt_release(id,sys_id,content,release_date,release_title) values(#{id},#{sysid},#{content},#{releasedate},#{releasetitle})
+    </insert>
+
+    <select id="getWtreleaseDeteals" parameterType="String" resultType="com.hwh.po.WtRelease">
+        select * from wt_release wr where wr.id = #{wtid}
+    </select>
+
+    <select id="getAllAnswerByWtId" parameterType="String" resultType="com.hwh.po.WtAnswer">
+        select * from wt_answer wa where wa.wt_id = #{wtid} order by wa.answer_date
+    </select>
+
+    <select id="getQuestionIDByWtId" parameterType="String" resultType="String">
+        select wr.sys_id from wt_release wr where wr.id = #{wtid}
+    </select>
+
+    <insert id="submitAnswerContent" parameterType="com.hwh.po.WtAnswer">
+        insert into wt_answer(id, answer_id, wt_id, questions_id, answer_content, answer_date) values(#{id},#{answerid},#{wtid},#{questionsid},#{answercontent},#{answerdate})
+    </insert>
 </mapper>

@@ -6,11 +6,15 @@ package com.hwh.vo;
  */
 public class WtReleaseVo {
 
+    private String wtid;
+
     private String sysname;
 
     private String title;
 
     private String releasedate;
+
+    private String content;
 
     public WtReleaseVo() {
     }
@@ -19,6 +23,21 @@ public class WtReleaseVo {
         this.sysname = sysname;
         this.title = title;
         this.releasedate = releasedate;
+    }
+
+    public WtReleaseVo(String wtid, String sysname, String title, String releasedate) {
+        this.wtid = wtid;
+        this.sysname = sysname;
+        this.title = title;
+        this.releasedate = releasedate;
+    }
+
+    public WtReleaseVo(String wtid, String sysname, String title, String releasedate, String content) {
+        this.wtid = wtid;
+        this.sysname = sysname;
+        this.title = title;
+        this.releasedate = releasedate;
+        this.content = content;
     }
 
     public String getSysname() {
@@ -43,5 +62,21 @@ public class WtReleaseVo {
 
     public void setReleasedate(String releasedate) {
         this.releasedate = releasedate;
+    }
+
+    public String getWtid() {
+        return wtid;
+    }
+
+    public void setWtid(String wtid) {
+        this.wtid = wtid;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 }

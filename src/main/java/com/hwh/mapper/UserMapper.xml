@@ -76,4 +76,8 @@
             </if>
         </where>
     </select>
+
+    <select id="getUserNameById" parameterType="String" resultType="String">
+        select su.username from sys_user su where su.id = #{sysid}
+    </select>
 </mapper>
