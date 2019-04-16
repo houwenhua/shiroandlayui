@@ -5,6 +5,7 @@ import com.hwh.mapper.UserMapper;
 import com.hwh.po.WtAnswer;
 import com.hwh.po.WtRelease;
 import com.hwh.util.UUIDUtil;
+import com.hwh.vo.DataTable;
 import com.hwh.vo.WtAnswerVo;
 import com.hwh.vo.WtReleaseVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,9 @@ public class CommentService {
         for(WtRelease wr : wrlise) {
             String userName = um.getUserNameById(wr.getSysid());
             WtReleaseVo wrv = new WtReleaseVo(wr.getId(),userName,wr.getReleasetitle(),sdf.format(wr.getReleasedate()));
+            // 查询问题的评论条数，根据问题id
+            String num = cm.getAllAnswerNumByWtId(wr.getId());
+            wrv.setAnswernumber(num);
             wrvList.add(wrv);
         }
         return wrvList;
@@ -73,5 +77,26 @@ public class CommentService {
         Date date = new Date();
         WtAnswer wa = new WtAnswer(UUIDUtil.getUUID(),usercode,wtid,questionsId,date,answerContent);
         cm.submitAnswerContent(wa);
+    }
+
+    public DataTable findAllWtreleasesPage(int currPage, int limt) {
+        List<WtRelease> wrlise = cm.findAllWtreleasesPage(currPage,limt);
+        Long count = cm.countPage();
+        List<WtReleaseVo> wrvList = new ArrayList<>();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        for(WtRelease wr : wrlise) {
+            String userName = um.getUserNameById(wr.getSysid());
+            WtReleaseVo wrv = new WtReleaseVo(wr.getId(),userName,wr.getReleasetitle(),sdf.format(wr.getReleasedate()));
+            // 查询问题的评论条数，根据问题id
+            String num = cm.getAllAnswerNumByWtId(wr.getId());
+            wrv.setAnswernumber(num);
+            wrvList.add(wrv);
+        }
+        return new DataTable(0,"",count,wrvList);
+    }
+
+    public String getAllWtreleasesPageCount() {
+        Long count = cm.countPage();
+        return count.toString();
     }
 }

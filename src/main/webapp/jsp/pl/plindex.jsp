@@ -50,8 +50,8 @@
           </span>
                 </div>
 
-                <ul class="fly-list">
-                    <c:forEach items="${requestScope.wtList }" var="wt">
+                <ul class="fly-list" id="releaseUL">
+                    <%--<c:forEach items="${requestScope.wtList }" var="wt">
                         <li>
                                <a href="user/home.html" class="fly-avatar">
                                    <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg" alt="贤心">
@@ -59,7 +59,7 @@
                                <h2>
                                    <a class="layui-badge">动态</a>
                                    <input type="hidden" value="${wt.wtid}">
-                                   <a href="/jsp/pl/pldetail.jsp?wtid=${wt.wtid}" <%--onclick="openDetail(${wt.wtid});"--%>>${wt.title}</a>
+                                   <a href="/jsp/pl/pldetail.jsp?wtid=${wt.wtid}&answerNum=${wt.answernumber}" &lt;%&ndash;onclick="openDetail(${wt.wtid});"&ndash;%&gt;>${wt.title}</a>
                                </h2>
                                <div class="fly-list-info">
                                    <a href="user/home.html" link>
@@ -73,20 +73,20 @@
 
                                    <span class="fly-list-kiss layui-hide-xs" title="悬赏飞吻"><i class="iconfont icon-kiss"></i> 60</span>
                                    <!--<span class="layui-badge fly-badge-accept layui-hide-xs">已结</span>-->
-                                   <span class="fly-list-nums">
-                <i class="iconfont icon-pinglun1" title="回答"></i> 66
+                                   <span class="fly-list-nums" id="answerRelease">
+                <i class="iconfont icon-pinglun1" title="回答" ></i>${wt.answernumber}
               </span>
                                </div>
                                <div class="fly-list-badge">
                                    <!--<span class="layui-badge layui-bg-red">精帖</span>-->
                                </div>
                            </li>
-                    </c:forEach>
+                    </c:forEach>--%>
                 </ul>
 
                 <!-- <div class="fly-none">没有相关数据</div> -->
                 <div style="text-align: center">
-                    <div class="laypage-main"><span class="laypage-curr">1</span><a href="/jie/page/2/">2</a><a href="/jie/page/3/">3</a><a href="/jie/page/4/">4</a><a href="/jie/page/5/">5</a><span>…</span><a href="/jie/page/148/" class="laypage-last" title="尾页">尾页</a><a href="/jie/page/2/" class="laypage-next">下一页</a></div>
+                    <div id="demo1"></div>
                 </div>
 
             </div>
@@ -112,15 +112,91 @@
     }).use('fly');
 </script>
 <script>
+    layui.use(['laypage', 'layer'], function(){
+        var laypage = layui.laypage
+            ,layer = layui.layer,
+            $ = layui.jquery;
+
+        $.ajax({
+            type:"POST",
+            url:"/commentController/getAllWtreleasesPageCount.action",
+            dataType:"json",
+            success:function (data) {
+                //总页数大于页码总数
+                laypage.render({
+                    elem: 'demo1',
+                    limit:5
+                    ,count: data //数据总数
+                    ,jump: function(obj){
+                        $.ajax({
+                            type:"POST",
+                            url:"/commentController/findAllWtreleasesPage.action",
+                            dataType:"json",
+                            data:{
+                                currPage:obj.curr,
+                                limit:obj.limit
+                            },
+                            success:function (data) {
+                                //清除ul中的所有li标签
+                                $('#releaseUL li').remove();
+
+                                var wt = data.data;
+                                var html = '';
+                                for(i=0;i<wt.length;i++) {
+                                    html = html + ' <li>\n' +
+                                        ' <a href="user/home.html" class="fly-avatar">\n' +
+                                        '          <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg" alt="贤心">\n' +
+                                        '      </a>\n' +
+                                        '      <h2>\n' +
+                                        '          <a class="layui-badge">动态</a>\n' +
+                                        '          <input type="hidden" value="' + wt[i].wtid +'">\n' +
+                                        '          <a href="/jsp/pl/pldetail.jsp?wtid=' + wt[i].wtid +'&answerNum=' + wt[i].answernumber +'" &lt;%&ndash;onclick="openDetail();"&ndash;%&gt;>' + wt[i].title +'</a>\n' +
+                                        '      </h2>\n' +
+                                        '      <div class="fly-list-info">\n' +
+                                        '          <a href="user/home.html" link>\n' +
+                                        '              <cite>' + wt[i].sysname +'</cite>\n' +
+                                        '              <!--\n' +
+                                        '              <i class="iconfont icon-renzheng" title="认证信息：XXX"></i>\n' +
+                                        '              <i class="layui-badge fly-badge-vip">VIP3</i>\n' +
+                                        '              -->\n' +
+                                        '          </a>\n' +
+                                        '          <span>' + wt[i].releasedate +'</span>\n' +
+                                        '\n' +
+                                        '          <span class="fly-list-kiss layui-hide-xs" title="悬赏飞吻"><i class="iconfont icon-kiss"></i> 60</span>\n' +
+                                        '          <!--<span class="layui-badge fly-badge-accept layui-hide-xs">已结</span>-->\n' +
+                                        '          <span class="fly-list-nums" id="answerRelease">\n' +
+                                        '                <i class="iconfont icon-pinglun1" title="回答" ></i>'+ wt[i].answernumber +'\n' +
+                                        '              </span>\n' +
+                                        '                               </div>\n' +
+                                        '                               <div class="fly-list-badge">\n' +
+                                        '                                   <!--<span class="layui-badge layui-bg-red">精帖</span>-->\n' +
+                                        '                               </div>\n' +
+                                        '                           </li>';
+                                }
+                                $("#releaseUL").append(html);
+
+                            }
+                        });
+                    }
+                });
+            }
+        });
+
+
+    });
+</script>
+
+<script>
     function openAddWtRelease() {
-        layui.use(['table', 'form', 'layer'], function () {
+        layui.use(['table', 'form', 'layer','laypage'], function () {
             var form = layui.form
                 , table = layui.table
                 , layer = layui.layer
                 /*, vipTable = layui.vip_table*/
                 , $ = layui.jquery;
+            var laypage = layui.laypage;
 
-            layer.open({
+            var index = layer.open({
             type: 2,
             title: '发表问题',
             shadeClose: true,
@@ -128,7 +204,7 @@
             shade: 0.8,*/
             maxmin:true,
          /*   btn:['保存','取消'],*/
-            area: ['100%', '100%'],
+            /*area: ['100%', '100%'],*/
             content: '/jsp/pl/pladd.jsp', //iframe的url
             success: function(layero, index){
                 var iframe = window['layui-layer-iframe' + index];
@@ -147,6 +223,8 @@
                 tableIns.reload();
             }
         });
+        //实现弹窗全屏显示
+        layer.full(index);
     });
     }
 

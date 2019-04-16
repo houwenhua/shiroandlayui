@@ -44,7 +44,7 @@
                         <!-- <span class="layui-btn layui-btn-xs jie-admin" type="set" field="status" rank="0" style="background-color:#ccc;">取消加精</span> -->
                     </div>
                     <span class="fly-list-nums">
-            <a href="#comment"><i class="iconfont" title="回答">&#xe60c;</i> 66</a>
+            <a href="#comment"><i class="iconfont" title="回答">&#xe60c;</i><span id="answerNum"></span></a>
             <i class="iconfont" title="人气">&#xe60b;</i> 99999
           </span>
                 </div>
@@ -194,7 +194,7 @@
     };
     layui.config({
         version: "3.0.0"
-        ,base: '../../res/mods/'
+        ,base: '../../js/fly/mods/'
     }).extend({
         fly: 'index'
     }).use(['fly', 'face'], function(){
@@ -220,6 +220,7 @@
     }
 
     var wtid = getQueryString("wtid");
+    $("#answerNum").text(getQueryString("answerNum"));
     $.ajax({
         type:"POST",
         url:"/commentController/getWtreleaseDeteals.action",

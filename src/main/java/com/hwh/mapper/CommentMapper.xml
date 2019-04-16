@@ -8,6 +8,14 @@
         select * from wt_release wr order by wr.release_date DESC
     </select>
 
+    <select id="findAllWtreleasesPage" parameterType="int" resultType="com.hwh.po.WtRelease">
+        select * from wt_release wr order by wr.release_date DESC limit #{currPage},#{limit}
+    </select>
+
+    <select id="countPage" resultType="Long">
+        select count(*) from wt_release
+    </select>
+
     <insert id="addWtrelease" parameterType="com.hwh.po.WtRelease">
         insert into wt_release(id,sys_id,content,release_date,release_title) values(#{id},#{sysid},#{content},#{releasedate},#{releasetitle})
     </insert>
@@ -27,4 +35,8 @@
     <insert id="submitAnswerContent" parameterType="com.hwh.po.WtAnswer">
         insert into wt_answer(id, answer_id, wt_id, questions_id, answer_content, answer_date) values(#{id},#{answerid},#{wtid},#{questionsid},#{answercontent},#{answerdate})
     </insert>
+
+    <select id="getAllAnswerNumByWtId" parameterType="String" resultType="String">
+        select count(*) from wt_answer wa where wa.wt_id = #{wtid}
+    </select>
 </mapper>

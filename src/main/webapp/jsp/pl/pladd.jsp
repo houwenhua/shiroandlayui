@@ -133,7 +133,7 @@
     };
     layui.config({
         version: "3.0.0"
-        ,base: '../../res/mods/'
+        ,base: '../../js/fly/mods/'
     }).extend({
         fly: 'index'
     }).use('fly');

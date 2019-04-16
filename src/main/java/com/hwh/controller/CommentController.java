@@ -1,6 +1,7 @@
 package com.hwh.controller;
 
 import com.hwh.service.CommentService;
+import com.hwh.vo.DataTable;
 import com.hwh.vo.WtAnswerVo;
 import com.hwh.vo.WtReleaseVo;
 import org.apache.shiro.SecurityUtils;
@@ -34,7 +35,27 @@ public class CommentController {
         List<WtReleaseVo> list = ms.findAllWtReleases();
         ModelAndView mav = new ModelAndView("/jsp/pl/plindex.jsp");
         mav.addObject("wtList",list);
+
+
         return mav;
+    }
+
+    /**
+     * 查询出所有问题，并且分页
+     * @param currPage 当前页
+     * @param limit 每页的条数
+     */
+    @RequestMapping(value = "/findAllWtreleasesPage",method = RequestMethod.POST,produces = "application/json;charset=utf-8")
+    @ResponseBody
+    public DataTable findAllWtreleasesPage(int currPage,int limit){
+       DataTable dt = ms.findAllWtreleasesPage((currPage-1)*limit,limit);
+       return dt;
+    }
+
+    @RequestMapping(value = "/getAllWtreleasesPageCount",method = RequestMethod.POST,produces = "application/json;charset=utf-8")
+    @ResponseBody
+    public String getAllWtreleasesPageCount() {
+        return ms.getAllWtreleasesPageCount();
     }
 
     /**
@@ -62,6 +83,7 @@ public class CommentController {
         mav.addObject(wrv);*/
         return wrv;
     }
+
 
     /**
      * 根据问题id查找所有回帖

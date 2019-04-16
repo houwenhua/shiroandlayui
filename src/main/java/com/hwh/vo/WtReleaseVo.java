@@ -16,6 +16,9 @@ public class WtReleaseVo {
 
     private String content;
 
+    //查询问题的评论条数
+    private String answernumber;
+
     public WtReleaseVo() {
     }
 
@@ -78,5 +81,13 @@ public class WtReleaseVo {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getAnswernumber() {
+        return answernumber;
+    }
+
+    public void setAnswernumber(String answernumber) {
+        this.answernumber = answernumber;
     }
 }
