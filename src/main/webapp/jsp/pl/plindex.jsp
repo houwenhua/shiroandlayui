@@ -16,6 +16,7 @@
     <meta name="description" content="Fly社区是模块化前端UI框架Layui的官网社区，致力于为web开发提供强劲动力">
     <link rel="stylesheet" href="../../frame/layui3/css/layui.css">
     <link rel="stylesheet" href="../../js/fly/global.css">
+
 </head>
 <body>
 <div class="fly-header fly-panel fly-column">
@@ -187,6 +188,7 @@
 </script>
 
 <script>
+    var tmepIndex;
     function openAddWtRelease() {
         layui.use(['table', 'form', 'layer','laypage'], function () {
             var form = layui.form
@@ -196,6 +198,7 @@
                 , $ = layui.jquery;
             var laypage = layui.laypage;
 
+
             var index = layer.open({
             type: 2,
             title: '发表问题',
@@ -203,8 +206,8 @@
          /*   anim:0,//动画平滑放大。默认
             shade: 0.8,*/
             maxmin:true,
-         /*   btn:['保存','取消'],*/
-            /*area: ['100%', '100%'],*/
+            btn:['发布','取消'],
+            area: ['50%', '50%'],
             content: '/jsp/pl/pladd.jsp', //iframe的url
             success: function(layero, index){
                 var iframe = window['layui-layer-iframe' + index];
@@ -214,18 +217,36 @@
             yes: function(index,layero){
                 var body = layer.getChildFrame('body', index);
                 var iframeWin = window[layero.find('iframe')[0]['name']]; //得到iframe页的窗口对象，执行iframe页的方法：iframeWin.method();
-                iframeWin.addUser();
+                iframeWin.addBtn();
+               /* setTimeout( function(){
+                    layer.close(index);
+                    layer.msg("发布成功", {icon: 6});
+                }, 2 * 1000 );*/
+                tmepIndex = index;
+
+
             },
             btn2: function(){
-                //alert("这是点击取消按钮走的回调");
+               //return false;
             },
             end:function () {
-                tableIns.reload();
+                history.go(0);
             }
         });
         //实现弹窗全屏显示
         layer.full(index);
     });
+    }
+    function closeZChuangKou() {
+        layui.use(['table', 'form', 'layer','laypage'], function () {
+            var form = layui.form
+                , table = layui.table
+                , layer = layui.layer
+                /*, vipTable = layui.vip_table*/
+                , $ = layui.jquery;
+
+            layer.close(tmepIndex);
+        });
     }
 
     function openDetail(wtid) {
@@ -263,6 +284,10 @@
             });
         });
     }
+
+    function  closePLAdd() {
+        alert(55);
+    };
 </script>
 
 </body>

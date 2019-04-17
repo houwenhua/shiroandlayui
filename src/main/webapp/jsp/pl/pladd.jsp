@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="../../frame/layui3/css/layui.css">
     <link rel="stylesheet" href="../../js/fly/global.css">
 </head>
-<body>
+<body style="margin-top: 0px;">
 
 
 <div class="layui-container fly-marginTop">
@@ -109,8 +109,8 @@
                                     <span style="color: #c00;">1+1=?</span>
                                 </div>
                             </div>--%>
-                            <div class="layui-form-item">
-                                <button class="layui-btn"<%-- lay-filter="*" --%>id="addBtn">立即发布</button>
+                            <div class="layui-form-item" style="display:none">
+                                <button class="layui-btn"<%-- lay-filter="*" --%>onclick="addBtn()" >立即发布</button>
                             </div>
                         </form>
                     </div>
@@ -140,7 +140,18 @@
 </script>
 
 <script>
-    $("#addBtn").click(function () {
+    function addBtn() {
+        if($.trim($("#L_title").val()) == ""  ) {
+            layui.use('layer', function(){
+                var layer = layui.layer;
+                layer.alert('标题不能为空',{icon: 5, title:'提示'});
+            });
+        } else  if($.trim($("#L_content").val()) == "") {
+            layui.use('layer', function(){
+                var layer = layui.layer;
+                layer.alert('内容不能为空',{icon: 5, title:'提示'});
+            });
+        } else {
             $.ajax({
                 type:"POST",
                 url:"/commentController/addWtrelease.action",
@@ -151,19 +162,35 @@
                 },
                 success:function (data) {
                     if(data == "1") {
+
                         layui.use(['table', 'form', 'layer'], function () {
                             var form = layui.form
                                 , table = layui.table
                                 , layer = layui.layer
                                 , $ = layui.jquery;
+                            layer.msg("发布成功", {icon: 6});
+                            setTimeout( function(){
+                                window.parent.closeZChuangKou();
+                            }, 1 * 1000 );
 
-                            layer.closeAll();
-                            layer.alert('发布成功',{icon: 1, title:'提示'});
                         });
                     }
                 }
             });
+        }
+    }
+   /* $("#addBtn").click(function () {
+
+
     });
+
+function dddd() {
+    window.parent.closePLAdd();
+}*/
+   /* $("#bb").click(function () {
+        window.parent.closePLAdd();
+    });*/
+
 
 </script>
 

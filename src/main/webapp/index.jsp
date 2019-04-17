@@ -82,7 +82,7 @@
             <ul class="layui-tab-title">
                 <li class="layui-this" lay-id="1"><span><i class="layui-icon">&#xe638;</i>欢迎页</span></li>
             </ul>
-            <div class="layui-tab-content">
+            <div class="layui-tab-content" width="100%" height="100%">
                 <div class="layui-tab-item layui-show">
                     <iframe width="100%" height="100%" id="iframe" src="welcome.jsp" frameborder="0"></iframe>
                 </div>
